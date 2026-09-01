@@ -428,12 +428,12 @@ input[type="search"]::-webkit-search-cancel-button {
   }
 }
 .animate-row-collapse-out {
-  animation: row-collapse-out 225ms ease-in forwards;
+  animation: row-collapse-out 225ms ease-out forwards;
 }
 .animate-row-slide-out {
   animation:
-    row-slide-out 225ms ease-in forwards,
-    row-fade-out 160ms ease-in forwards;
+    row-slide-out 225ms ease-out forwards,
+    row-fade-out 160ms ease-out forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -826,7 +826,7 @@ input[type="search"]::-webkit-search-cancel-button {
 @keyframes bui-agent-thinking-star {
   0%,
   100% {
-    transform: scale(0);
+    transform: scale(0.95);
     opacity: 0;
   }
   40% {
@@ -840,7 +840,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .bui-agent-thinking-star {
-  transform: scale(0);
+  transform: scale(0.95);
   animation-name: bui-agent-thinking-star;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;

@@ -823,13 +823,12 @@
   transition:
     background-color var(--button-transition-ms) ease,
     border-color var(--button-transition-ms) ease,
-    box-shadow var(--button-transition-ms) ease,
     color var(--button-transition-ms) ease,
-    transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
 
   &:active:not(:disabled):not([aria-disabled="true"]) {
     transform: scale(0.98);
-    transition-duration: 150ms, 150ms, 150ms, 150ms, 220ms;
+    transition-duration: 150ms, 150ms, 150ms, 140ms;
   }
 
   &:disabled,

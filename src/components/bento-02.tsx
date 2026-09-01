@@ -36,7 +36,7 @@ const capabilities = [
 export function Bento02() {
   return (
     <div className="mt-14 grid gap-3 lg:grid-cols-12 lg:grid-rows-[auto_auto]">
-      <article className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-gray-50 via-white to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-gray-900 dark:to-black lg:col-span-7 lg:row-span-2 lg:p-9">
+      <article className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-b from-gray-50 via-white to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-gray-900 dark:to-black lg:col-span-7 lg:row-span-2 lg:p-9">
         <div className="flex items-start justify-between gap-6">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
@@ -79,7 +79,7 @@ export function Bento02() {
         </div>
       </article>
 
-      <article className="rounded-2xl border border-gray-200 bg-gradient-to-br from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
+      <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
@@ -96,7 +96,7 @@ export function Bento02() {
         </p>
       </article>
 
-      <article className="rounded-2xl border border-gray-200 bg-gradient-to-br from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
+      <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
             Connected thinking
@@ -117,7 +117,7 @@ export function Bento02() {
       </article>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:col-span-12 lg:grid-cols-3">
-        <article className="rounded-2xl border border-gray-200 bg-gradient-to-br from-gray-50 via-white to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-gray-900 dark:to-black">
+        <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-gray-50 via-white to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-gray-900 dark:to-black">
           <div className="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-200">
             <span className="relative grid size-7 place-items-center rounded-full border border-gray-300 dark:border-gray-700">
               <span className="size-2 rounded-full bg-gray-700 dark:bg-gray-200" />
@@ -130,7 +130,7 @@ export function Bento02() {
           </p>
         </article>
 
-        <article className="rounded-2xl border border-gray-200 bg-gradient-to-br from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950">
+        <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950">
           <div className="flex items-center justify-between gap-4">
             <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
               Smart alerts
@@ -142,7 +142,7 @@ export function Bento02() {
           </p>
         </article>
 
-        <article className="rounded-2xl border border-gray-200 bg-gradient-to-br from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 sm:col-span-2 lg:col-span-1">
+        <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center justify-between gap-4">
             <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
               What we bring

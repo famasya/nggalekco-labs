@@ -2,6 +2,7 @@
 import React, { useRef, useMemo, useState, useCallback, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Html, useTexture } from "@react-three/drei";
+import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
@@ -389,6 +390,7 @@ interface SceneProps {
 
 function Scene({ markers, config, onMarkerClick, onMarkerHover }: SceneProps) {
   const { camera } = useThree();
+  const prefersReducedMotion = useReducedMotion() === true;
 
   // Set initial camera position (pulled back to accommodate markers)
   React.useEffect(() => {
@@ -437,9 +439,9 @@ function Scene({ markers, config, onMarkerClick, onMarkerHover }: SceneProps) {
         minDistance={config.minDistance}
         maxDistance={config.maxDistance}
         rotateSpeed={0.4}
-        autoRotate={config.autoRotateSpeed > 0}
+        autoRotate={config.autoRotateSpeed > 0 && !prefersReducedMotion}
         autoRotateSpeed={config.autoRotateSpeed}
-        enableDamping
+        enableDamping={!prefersReducedMotion}
         dampingFactor={0.1}
       />
     </>

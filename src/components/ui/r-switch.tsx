@@ -3,6 +3,7 @@
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 import {
   animate,
+  type AnimationPlaybackControls,
   type MotionValue,
   motion,
   useMotionValue,
@@ -16,9 +17,9 @@ import { cn } from "@/lib/utils";
 const componentThemeClassName =
   "[--ic-background:#ffffff] [--ic-foreground:#111111] [--ic-primary:#111111] [--ic-secondary:#646b75] [--ic-surface-border:#e9edf2] [--ic-border:#e3e7ec] [--ic-card:#ffffff] [--ic-card-foreground:#111111] [--ic-muted:#f5f7fa] [--ic-muted-foreground:#6d7480] [--ic-accent:#f3f5f8] [--color-accent:var(--ic-accent)] [--color-accent-foreground:var(--ic-accent-foreground)] [--ic-accent-foreground:#111111] [--ic-input:#e3e7ec] [--ic-ring:rgba(17,17,17,0.16)] [--ic-destructive:#dc2626] [--ic-paper:#fcfcfd] [--ic-popover-foreground:#111111] [--ic-brand:#0ea5e9] [--ic-brand-soft:#bae6fd] [--ic-shadow-soft:0_18px_38px_-24px_rgba(15,23,42,0.35)] [--ic-chart-1:oklch(0.52_0.19_254)] [--ic-chart-2:oklch(0.74_0.11_232)] [--ic-chart-3:oklch(0.42_0.16_262)] [--ic-chart-4:oklch(0.84_0.07_228)] [--ic-chart-5:oklch(0.62_0.14_240)] [--color-background:var(--ic-background)] [--color-foreground:var(--ic-foreground)] [--color-primary:var(--ic-primary)] [--color-secondary:var(--ic-secondary)] [--color-border:var(--ic-border)] [--color-card:var(--ic-card)] [--color-card-foreground:var(--ic-card-foreground)] [--color-muted:var(--ic-muted)] [--color-muted-foreground:var(--ic-muted-foreground)] [--color-accent:var(--ic-accent)] [--color-accent-foreground:var(--ic-accent-foreground)] [--color-input:var(--ic-input)] [--color-ring:var(--ic-ring)] [--color-destructive:var(--ic-destructive)] [--color-paper:var(--ic-paper)] [--color-popover-foreground:var(--ic-popover-foreground)] [--color-brand:var(--ic-brand)] [--color-brand-soft:var(--ic-brand-soft)] [--color-chart-1:var(--ic-chart-1)] [--color-chart-2:var(--ic-chart-2)] [--color-chart-3:var(--ic-chart-3)] [--color-chart-4:var(--ic-chart-4)] [--color-chart-5:var(--ic-chart-5)] dark:[--ic-background:#111111] dark:[--ic-foreground:#f6f3ec] dark:[--ic-primary:#f6f3ec] dark:[--ic-secondary:#cbc6bb] dark:[--ic-surface-border:#2a2a25] dark:[--ic-border:#2b2a25] dark:[--ic-card:#111111] dark:[--ic-card-foreground:#f6f3ec] dark:[--ic-muted:#171716] dark:[--ic-muted-foreground:#9a958a] dark:[--ic-accent:#1a1a18] [--color-accent:var(--ic-accent)] [--color-accent-foreground:var(--ic-accent-foreground)] dark:[--ic-accent-foreground:#f6f3ec] dark:[--ic-input:#2b2a25] dark:[--ic-ring:rgba(246,243,236,0.18)] dark:[--ic-destructive:#f87171] dark:[--ic-paper:#171716] dark:[--ic-popover-foreground:#f6f3ec] dark:[--ic-brand:#38bdf8] dark:[--ic-brand-soft:#0c4a6e] dark:[--ic-shadow-soft:0_20px_44px_-28px_rgba(0,0,0,0.6)] dark:[--ic-chart-1:oklch(0.68_0.17_250)] dark:[--ic-chart-2:oklch(0.82_0.09_225)] dark:[--ic-chart-3:oklch(0.58_0.15_260)] dark:[--ic-chart-4:oklch(0.75_0.12_235)] dark:[--ic-chart-5:oklch(0.88_0.06_220)]";
 
-const spring = { type: "spring" as const, duration: 0.35, bounce: 0.3 };
-const springFast = { type: "spring" as const, duration: 0.15, bounce: 0 };
-const springSnap = { type: "spring" as const, duration: 0.4, bounce: 0.5 };
+const spring = { type: "spring" as const, duration: 0.2, bounce: 0.2 };
+const springFast = { type: "spring" as const, duration: 0.12, bounce: 0 };
+const springSnap = { type: "spring" as const, duration: 0.2, bounce: 0.2 };
 
 export type SwitchSize = "default" | "lg" | "sm";
 
@@ -187,14 +188,13 @@ function useSwitchThumbMotion(
   thumbTravel: number,
   prefersReducedMotion: boolean,
 ): SwitchThumbMotion {
-  const thumbTravelRef = React.useRef(thumbTravel);
-  thumbTravelRef.current = thumbTravel;
-
   const thumbX = useMotionValue(displayChecked ? thumbTravel : 0);
   const thumbScaleX = useMotionValue(1);
   const thumbScaleY = useMotionValue(1);
+  const scaleControlsRef = React.useRef<AnimationPlaybackControls[]>([]);
+  const scaleGenerationRef = React.useRef(0);
   const fillOpacity = useTransform(thumbX, (x) => {
-    const travel = thumbTravelRef.current;
+    const travel = thumbTravel;
 
     if (travel <= 0) {
       return 0;
@@ -215,7 +215,7 @@ function useSwitchThumbMotion(
   }, [displayChecked, thumbTravel, thumbX]);
 
   React.useEffect(() => {
-    const travel = thumbTravelRef.current;
+    const travel = thumbTravel;
     const nextX = displayChecked ? travel : 0;
 
     if (prevChecked.current === displayChecked && thumbX.get() === nextX) {
@@ -234,34 +234,55 @@ function useSwitchThumbMotion(
     return () => {
       controls.stop();
     };
-  }, [displayChecked, prefersReducedMotion, thumbX]);
+  }, [displayChecked, prefersReducedMotion, thumbTravel, thumbX]);
+
+  const stopScaleAnimations = React.useCallback(() => {
+    scaleGenerationRef.current += 1;
+    scaleControlsRef.current.forEach((control) => control.stop());
+    scaleControlsRef.current = [];
+  }, []);
 
   const playPressSquash = React.useCallback(() => {
-    animate(thumbScaleX, 0.82, springFast);
-    animate(thumbScaleY, 1.1, springFast);
-  }, [thumbScaleX, thumbScaleY]);
+    stopScaleAnimations();
+    scaleControlsRef.current = [
+      animate(thumbScaleX, 0.82, springFast),
+      animate(thumbScaleY, 1.1, springFast),
+    ];
+  }, [stopScaleAnimations, thumbScaleX, thumbScaleY]);
 
   const playReleaseSquash = React.useCallback(() => {
-    animate(thumbScaleX, 1, springSnap);
-    animate(thumbScaleY, 1, springSnap);
-  }, [thumbScaleX, thumbScaleY]);
+    stopScaleAnimations();
+    scaleControlsRef.current = [
+      animate(thumbScaleX, 1, springSnap),
+      animate(thumbScaleY, 1, springSnap),
+    ];
+  }, [stopScaleAnimations, thumbScaleX, thumbScaleY]);
 
   const playToggleSquash = React.useCallback(() => {
-    animate(thumbScaleX, 1.15, springFast).then(() => {
-      animate(thumbScaleX, 1, springSnap);
+    stopScaleAnimations();
+    const generation = scaleGenerationRef.current;
+    const pressX = animate(thumbScaleX, 1.15, springFast);
+    const pressY = animate(thumbScaleY, 0.88, springFast);
+    scaleControlsRef.current = [pressX, pressY];
+
+    Promise.all([pressX, pressY]).then(() => {
+      if (scaleGenerationRef.current !== generation) {
+        return;
+      }
+
+      scaleControlsRef.current = [
+        animate(thumbScaleX, 1, springSnap),
+        animate(thumbScaleY, 1, springSnap),
+      ];
     });
-    animate(thumbScaleY, 0.88, springFast).then(() => {
-      animate(thumbScaleY, 1, springSnap);
-    });
-  }, [thumbScaleX, thumbScaleY]);
+  }, [stopScaleAnimations, thumbScaleX, thumbScaleY]);
 
   React.useEffect(() => {
     return () => {
       thumbX.stop();
-      thumbScaleX.stop();
-      thumbScaleY.stop();
+      stopScaleAnimations();
     };
-  }, [thumbScaleX, thumbScaleY, thumbX]);
+  }, [stopScaleAnimations, thumbX]);
 
   return {
     fillOpacity,

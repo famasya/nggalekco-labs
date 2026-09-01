@@ -6,6 +6,7 @@ import {
   motion,
   useInView,
   useMotionValue,
+  useReducedMotion,
   useTransform,
 } from "motion/react";
 import {
@@ -29,7 +30,7 @@ const BAND_HALF = 17;
 const SWEEP_START = -BAND_HALF;
 const SWEEP_END = 100 + BAND_HALF;
 const TEXT_SWAP_EASE = [0.22, 1, 0.36, 1] as const;
-const TEXT_SWAP_DURATION = 0.42;
+const TEXT_SWAP_DURATION = 0.5;
 
 type DiaTextMotionProps = ComponentPropsWithoutRef<typeof motion.span>;
 
@@ -135,6 +136,7 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
     const textBlur = useMotionValue(0);
     const textShift = useMotionValue(0);
     const inView = useInView(spanRef, { once, amount: 0.1 });
+    const prefersReducedMotion = useReducedMotion() === true;
     const previousActiveIndexRef = useRef(0);
 
     const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
@@ -205,10 +207,14 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
       timerRef.current = undefined;
     }, []);
 
-    const playRef = useRef<() => void>(() => undefined);
-
-    playRef.current = () => {
+    const play = useCallback(() => {
       clearCycle();
+
+      if (prefersReducedMotion) {
+        sweepPos.set(SWEEP_END);
+        return;
+      }
+
       sweepPos.set(SWEEP_START);
 
       controlsRef.current = animate(sweepPos, SWEEP_END, {
@@ -229,7 +235,16 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
           }, repeatDelay * 1000);
         },
       });
-    };
+    }, [
+      clearCycle,
+      delay,
+      duration,
+      prefersReducedMotion,
+      repeat,
+      repeatDelay,
+      sweepPos,
+      texts.length,
+    ]);
 
     useEffect(() => {
       if (textKey === previousTextKeyRef.current) {
@@ -247,9 +262,9 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
 
       if (isVisible) {
         hasPlayedRef.current = true;
-        playRef.current();
+        play();
       }
-    }, [clearCycle, isVisible, sweepPos, textKey]);
+    }, [clearCycle, isVisible, play, sweepPos, textKey]);
 
     useEffect(() => {
       const element = spanRef.current;
@@ -275,12 +290,21 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
       }
 
       hasPlayedRef.current = true;
-      playRef.current();
+      play();
 
       return clearCycle;
-    }, [clearCycle, isVisible, once]);
+    }, [clearCycle, isVisible, once, play]);
 
     useEffect(() => {
+      if (prefersReducedMotion) {
+        clearCycle();
+        sweepPos.set(SWEEP_END);
+        textOpacity.set(1);
+        textBlur.set(0);
+        textShift.set(0);
+        return;
+      }
+
       if (!isMulti) {
         textOpacity.set(1);
         textBlur.set(0);
@@ -335,7 +359,19 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
         shiftControls.stop();
         colorControls.stop();
       };
-    }, [activeIndex, isMulti, sweepPos, textBlur, textOpacity, textShift]);
+    }, [
+      activeIndex,
+      clearCycle,
+      isMulti,
+      prefersReducedMotion,
+      repeat,
+      repeatDelay,
+      sweepPos,
+      textBlur,
+      textOpacity,
+      textShift,
+      texts.length,
+    ]);
 
     useEffect(() => clearCycle, [clearCycle]);
 
@@ -354,7 +390,7 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
         animate={animatedW != null ? { width: animatedW } : undefined}
         className={cn(
           componentThemeClassName,
-          "align-bottom text-inherit leading-[100%]",
+          "align-bottom text-inherit leading-[1.25]",
           className,
         )}
         ref={setRefs}
@@ -364,7 +400,7 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
       >
         <motion.span
           aria-hidden
-          className="inline-block text-inherit leading-[100%]"
+          className="inline-block text-inherit leading-[1.25]"
           style={contentStyle}
         >
           {texts[activeIndex]}

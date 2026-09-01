@@ -1,11 +1,11 @@
 "use client";
 
 import { ArrowUpRight, Menu, Waves, X } from "lucide-react";
-import { useState, useSyncExternalStore } from "react";
+import { lazy, Suspense, useState, useSyncExternalStore } from "react";
 
 import { ButtonLink as BoardButtonLink } from "@/components/base/buttons/button";
 import { Bento02 } from "@/components/bento-02";
-import { Globe3D, type GlobeMarker } from "@/components/ui/3d-globe";
+import type { GlobeMarker } from "@/components/ui/3d-globe";
 import { DiaText } from "@/components/ui/dia-text";
 import { Switch } from "@/components/ui/r-switch";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,14 @@ const markers: GlobeMarker[] = [
     label: "Trenggalek",
   },
 ];
+
+const HERO_TEXT_REVEAL_DURATION = 0.6;
+const HERO_TEXT_REPEAT_DELAY = 3.5;
+
+const Globe3D = lazy(async () => {
+  const module = await import("@/components/ui/3d-globe");
+  return { default: module.Globe3D };
+});
 
 function useIsClient() {
   return useSyncExternalStore(
@@ -34,8 +42,14 @@ function Brand() {
       href="#top"
       aria-label="Nggalekco Labs home"
     >
-      <span className="grid size-10 place-items-center overflow-hidden rounded-full border border-gray-200 bg-gray-100 transition-colors group-hover:border-gray-400 group-hover:bg-gray-200 dark:border-gray-700 dark:bg-black dark:group-hover:border-gray-500">
-        <img src="/logo.png" alt="" className="size-full object-contain" aria-hidden="true" />
+      <span className="relative isolate grid size-10 place-items-center">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-2 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgb(56_189_248_/_0.42),transparent_48%),radial-gradient(circle_at_75%_75%,rgb(168_85_247_/_0.3),transparent_55%)] opacity-80 blur-md dark:opacity-90"
+        />
+        <span className="relative z-10 grid size-full place-items-center overflow-hidden rounded-full bg-gray-100/80 backdrop-blur-sm transition-[background-color,backdrop-filter] duration-[150ms] ease-out group-hover:bg-white/20 group-hover:backdrop-blur-md dark:bg-gray-900/70 dark:group-hover:bg-white/20">
+          <img src="/logo.png" alt="" className="size-full object-contain" aria-hidden="true" />
+        </span>
       </span>
       <span className="text-[15px] font-normal tracking-[-0.02em] text-gray-900 dark:text-gray-100">
         nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
@@ -49,25 +63,27 @@ function HeroGlobe({ isDark }: { isDark: boolean }) {
   if (!isClient) return <div className="h-full w-full" aria-hidden="true" />;
 
   return (
-    <Globe3D
-      className={cn(
-        "h-full w-full cursor-grab touch-none active:cursor-grabbing",
-        isDark ? "brightness-[1.28]" : "brightness-[0.78]",
-      )}
-      markers={markers}
-      config={{
-        showAtmosphere: false,
-        bumpScale: 2.2,
-        autoRotateSpeed: 0.3,
-        initialRotation: { x: -0.24, y: 2.72 },
-        enableZoom: false,
-        enablePan: false,
-        markerSize: 0.09,
-        ambientIntensity: 0.95,
-        pointLightIntensity: 2.25,
-        backgroundColor: null,
-      }}
-    />
+    <Suspense fallback={<div className="h-full w-full" aria-hidden="true" />}>
+      <Globe3D
+        className={cn(
+          "h-full w-full cursor-grab touch-none active:cursor-grabbing",
+          isDark ? "brightness-[1.28]" : "brightness-[0.78]",
+        )}
+        markers={markers}
+        config={{
+          showAtmosphere: false,
+          bumpScale: 2.2,
+          autoRotateSpeed: 0.3,
+          initialRotation: { x: -0.24, y: 2.72 },
+          enableZoom: false,
+          enablePan: false,
+          markerSize: 0.09,
+          ambientIntensity: 0.95,
+          pointLightIntensity: 2.25,
+          backgroundColor: null,
+        }}
+      />
+    </Suspense>
   );
 }
 
@@ -120,7 +136,7 @@ export function Hero() {
           />
           <button
             type="button"
-            className="grid size-10 place-items-center rounded-lg border border-gray-300 text-gray-700 dark:border-gray-700 dark:text-gray-300 md:hidden"
+            className="grid size-10 place-items-center rounded-lg border border-gray-300 text-gray-700 transition-transform duration-[140ms] ease-out active:scale-[0.97] dark:border-gray-700 dark:text-gray-300 md:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
@@ -153,22 +169,22 @@ export function Hero() {
 
         <div className="pointer-events-none relative z-10 mx-auto flex min-h-[590px] w-full max-w-[1320px] items-center px-6 pb-24 pt-12 lg:min-h-[650px] lg:px-10 lg:pb-32 lg:pt-16">
           <div className="pointer-events-none max-w-[620px]">
-            <h1 className="max-w-[680px] text-[clamp(3.15rem,6vw,5.8rem)] font-normal leading-[1.02] tracking-[-0.07em] text-gray-900 dark:text-gray-100">
+            <h1 className="max-w-[680px] text-[clamp(3.15rem,6vw,5.8rem)] font-normal leading-[1.25] tracking-[-0.07em] text-gray-900 dark:text-gray-100">
               <DiaText
                 className="font-normal"
                 text="Local roots."
                 colors={[isDark ? "#f3f4f6" : "#111827"]}
-                duration={0.42}
+                duration={HERO_TEXT_REVEAL_DURATION}
                 textColor={isDark ? "#f3f4f6" : "#111827"}
               />
               <br />
               <DiaText
                 className="font-normal"
                 text={["Global impact.", "Useful software.", "Better systems."]}
-                duration={0.42}
+                duration={HERO_TEXT_REVEAL_DURATION}
                 textColor={isDark ? "#f3f4f6" : "#111827"}
                 repeat
-                repeatDelay={2}
+                repeatDelay={HERO_TEXT_REPEAT_DELAY}
                 fixedWidth
               />
             </h1>
@@ -216,7 +232,6 @@ export function Hero() {
       >
         <div>
           <div>
-            <p className="eyebrow">What we do</p>
             <h2 className="section-title mt-4 max-w-md dark:text-white">
               The right amount of technology for the job.
             </h2>
@@ -235,7 +250,6 @@ export function Hero() {
       >
         <div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-28 lg:px-10 lg:py-32">
           <div>
-            <p className="eyebrow">Our approach</p>
             <h2 className="section-title mt-4 max-w-2xl dark:text-white">
               Close enough to care. Experienced enough to deliver.
             </h2>
@@ -260,7 +274,6 @@ export function Hero() {
       >
         <div className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
           <div>
-            <p className="eyebrow">Let’s build something useful</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-normal leading-[1] tracking-[-0.06em] dark:text-gray-100 sm:text-6xl">
               Have a local problem with a bigger opportunity?
             </h2>
