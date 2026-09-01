@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "import", "jsx-a11y"],
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "globals": {
+    "import": false
+  },
+  "settings": {
+    "react": {
+      "version": "19.2.0"
+    }
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "coverage/**",
+    ".cta.json",
+    "worker-configuration.d.ts",
+    "src/routeTree.gen.ts",
+    "src/components/ui/3d-globe.tsx"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}

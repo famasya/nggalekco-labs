@@ -1,6 +1,10 @@
+packages:
+  - "."
+
 allowBuilds:
-  '@google/genai': true
+  "@google/genai": true
   esbuild: true
+  lefthook: true
   lightningcss: true
   protobufjs: true
   sharp: true

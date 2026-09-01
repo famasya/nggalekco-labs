@@ -1,0 +1,11 @@
+{
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "coverage/**",
+    "worker-configuration.d.ts",
+    ".cta.json",
+    "src/routeTree.gen.ts",
+    "*.gen.ts"
+  ]
+}
