@@ -228,7 +228,7 @@ export function Hero() {
 
       <section
         id="capabilities"
-        className="mx-auto max-w-[1320px] scroll-mt-10 bg-gradient-to-b from-white via-gray-50 to-gray-100 px-6 py-24 dark:from-black dark:via-gray-950 dark:to-black lg:px-10 lg:py-28"
+        className="mx-auto max-w-[1320px] scroll-mt-10 bg-white px-6 py-24 dark:bg-black lg:px-10 lg:py-28"
       >
         <div>
           <div>
