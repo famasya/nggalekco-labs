@@ -96,6 +96,20 @@ export function Hero() {
       className={cn("overflow-hidden bg-white text-gray-900", isDark && "dark bg-black text-white")}
     >
       <section className="relative isolate min-h-[700px] overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-white lg:min-h-[790px]">
+        <div
+          className="pointer-events-none absolute inset-0 z-0 [--hero-grid-line:rgb(209_213_219_/_0.32)] dark:[--hero-grid-line:rgb(75_85_99_/_0.24)]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, var(--hero-grid-line) 1px, transparent 1px),
+              linear-gradient(to bottom, var(--hero-grid-line) 1px, transparent 1px)
+            `,
+            backgroundSize: "32px 32px",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 55% 70% at 30% 50%, #000 20%, transparent 78%)",
+            maskImage: "radial-gradient(ellipse 55% 70% at 30% 50%, #000 20%, transparent 78%)",
+          }}
+          aria-hidden="true"
+        />
         <header className="relative z-30 mx-auto flex w-full max-w-[1320px] items-center justify-between px-6 py-6 lg:px-10 lg:py-8">
           <Brand />
           <nav
