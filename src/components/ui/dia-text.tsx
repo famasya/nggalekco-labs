@@ -49,6 +49,7 @@ export type DiaTextRevealProps = Omit<
   once?: boolean;
   className?: string;
   fixedWidth?: boolean;
+  wrap?: boolean;
 };
 
 const sweepEase = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2);
@@ -117,6 +118,7 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
       once = true,
       className,
       fixedWidth = false,
+      wrap = false,
       ...props
     },
     ref,
@@ -161,10 +163,10 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
 
     const animatedW = useMemo(
       () =>
-        isMulti && !fixedWidth && measuredWidths[activeIndex] != null
+        isMulti && !fixedWidth && !wrap && measuredWidths[activeIndex] != null
           ? measuredWidths[activeIndex]
           : undefined,
-      [activeIndex, fixedWidth, isMulti, measuredWidths],
+      [activeIndex, fixedWidth, isMulti, measuredWidths, wrap],
     );
 
     const containerStyle = useMemo(
@@ -172,12 +174,13 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
         ...(isMulti && {
           display: "inline-block",
           overflow: "visible",
-          whiteSpace: "nowrap",
+          whiteSpace: wrap ? "normal" : "nowrap",
+          ...(wrap && { maxWidth: "100%" }),
           verticalAlign: "text-center" as CSSProperties["verticalAlign"],
-          ...(fixedW != null && { width: fixedW }),
+          ...(!wrap && fixedW != null && { width: fixedW }),
         }),
       }),
-      [fixedW, isMulti],
+      [fixedW, isMulti, wrap],
     );
 
     const contentStyle = useMemo(
@@ -192,8 +195,9 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
         filter: contentFilter,
         transform: contentTransform,
         willChange: "filter, opacity, transform",
+        ...(wrap && { maxWidth: "100%", whiteSpace: "normal" }),
       }),
-      [backgroundImage, contentFilter, contentTransform, textOpacity],
+      [backgroundImage, contentFilter, contentTransform, textOpacity, wrap],
     );
 
     const clearCycle = useCallback(() => {
