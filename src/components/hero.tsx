@@ -42,14 +42,13 @@ function Brand() {
       href="#top"
       aria-label="Nggalekco Labs home"
     >
-      <span className="relative isolate grid size-10 place-items-center">
-        <span
+      <span className="grid size-10 place-items-center">
+        <img
+          src="/logo-light.png?v=2"
+          alt=""
+          className="size-full object-contain"
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-2 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgb(56_189_248_/_0.42),transparent_48%),radial-gradient(circle_at_75%_75%,rgb(168_85_247_/_0.3),transparent_55%)] opacity-80 blur-md dark:opacity-90"
         />
-        <span className="relative z-10 grid size-full place-items-center overflow-hidden rounded-full bg-gray-100/80 backdrop-blur-sm transition-[background-color,backdrop-filter] duration-[150ms] ease-out group-hover:bg-white/20 group-hover:backdrop-blur-md dark:bg-gray-900/70 dark:group-hover:bg-white/20">
-          <img src="/logo.png" alt="" className="size-full object-contain" aria-hidden="true" />
-        </span>
       </span>
       <span className="text-[15px] font-normal tracking-[-0.02em] text-gray-900 dark:text-gray-100">
         nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
