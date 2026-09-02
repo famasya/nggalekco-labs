@@ -3,7 +3,7 @@
 import { useCallback, useSyncExternalStore } from "react";
 import type { Locale } from "./landing-copy";
 
-const STORAGE_KEY = "nggalekco-locale";
+const STORAGE_KEY = "nggalek.co-locale";
 const DEFAULT: Locale = "id";
 
 function subscribe(callback: () => void) {

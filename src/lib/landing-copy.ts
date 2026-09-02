@@ -22,6 +22,14 @@ export type BentoCopy = {
   capabilities: Array<{ title: string; copy: string }>;
 };
 
+export type PortfolioProjectCopy = {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  focus: string;
+};
+
 export type LandingCopy = {
   languageLabel: string;
   mainNavigationLabel: string;
@@ -68,6 +76,15 @@ export type LandingCopy = {
     button: string;
     location: string;
   };
+  portfolio: {
+    eyebrow: string;
+    sidebarLabel: string;
+    title: string;
+    description: string;
+    visitSite: string;
+    sourceProfile: string;
+    projects: PortfolioProjectCopy[];
+  };
   bento: BentoCopy;
   metaTitle: string;
 };
@@ -91,12 +108,12 @@ export const translations: Record<Locale, LandingCopy> = {
     themeDarkMode: "Dark",
     menuOpen: "Open menu",
     menuClose: "Close menu",
-    brandHome: "Nggalekco Labs home",
+    brandHome: "nggalek.co Labs home",
     hero: {
       titleFirst: "Local roots.",
       titleSecond: ["Global impact.", "Useful software.", "Better systems."],
       description:
-        "Nggalekco Labs is a hyperlocal software development company based in Trenggalek, East Java — bringing national and global expertise to solve local problems.",
+        "nggalek.co Labs is a hyperlocal software development company based in Trenggalek, East Java — bringing national and global expertise to solve local problems.",
       startProject: "Start a project",
       exploreCapabilities: "Explore capabilities",
     },
@@ -141,6 +158,41 @@ export const translations: Record<Locale, LandingCopy> = {
       title: "Have a local problem with a bigger opportunity?",
       button: "Say hello",
       location: "Trenggalek, East Java · Indonesia",
+    },
+    portfolio: {
+      eyebrow: "Portfolio",
+      sidebarLabel: "Choose a portfolio project",
+      title: "Useful systems, rooted in their communities.",
+      description:
+        "Work that grows from real needs in Trenggalek—from spaces for community stories and local newsrooms to financial services close to the people they serve.",
+      visitSite: "Visit site",
+      sourceProfile: "Read source profile",
+      projects: [
+        {
+          id: "nggalek",
+          label: "nggalek.co",
+          title: "A place for local stories to stay close to home.",
+          description:
+            "Nggalek.co brings together essays, opinions, news, features, historical documentation, and stories from residents. It has grown as a place for people in Trenggalek to write and learn together, with a particular focus on environmental issues and the places they call home.",
+          focus: "Community publishing",
+        },
+        {
+          id: "kabartrenggalek",
+          label: "kabartrenggalek.com",
+          title: "Independent reporting for a community in motion.",
+          description:
+            "Kabar Trenggalek publishes reporting and perspectives on politics, economics, education, health, events, features, and life across the regency. The newsroom operates under PT Maha Karya Migunani.",
+          focus: "News publishing",
+        },
+        {
+          id: "bprjwalita",
+          label: "bprjwalita.com",
+          title: "Financial services with a distinctly local reach.",
+          description:
+            "BPR Jwalita is Trenggalek's regional people's bank, established on 27 September 2004. Its website connects people with savings, lending, deposits, product information, credit simulation, and a network of offices across the regency.",
+          focus: "Financial services",
+        },
+      ],
     },
     bento: {
       systemsEyebrow: "Systems that keep moving",
@@ -197,7 +249,7 @@ export const translations: Record<Locale, LandingCopy> = {
 
     menuOpen: "Buka menu",
     menuClose: "Tutup menu",
-    brandHome: "Beranda Nggalekco Labs",
+    brandHome: "Beranda nggalek.co Labs",
 
     hero: {
       titleFirst: "Teknologi",
@@ -207,7 +259,7 @@ export const translations: Record<Locale, LandingCopy> = {
         "untuk berkembang bersama.",
       ],
       description:
-        "Nggalekco Labs adalah perusahaan pengembangan perangkat lunak yang berbasis di Trenggalek, Jawa Timur. Kami bekerja dekat dengan pengguna untuk memahami kebutuhan, proses kerja, dan konteks setempat sebelum merancang solusi yang tepat.",
+        "nggalek.co Labs adalah perusahaan pengembangan perangkat lunak yang berbasis di Trenggalek, Jawa Timur. Kami bekerja dekat dengan pengguna untuk memahami kebutuhan, proses kerja, dan konteks setempat sebelum merancang solusi yang tepat.",
       startProject: "Mulai proyek",
       exploreCapabilities: "Lihat keahlian kami",
     },
@@ -257,6 +309,41 @@ export const translations: Record<Locale, LandingCopy> = {
       title: "Mari memahami kebutuhan Anda.",
       button: "Hubungi kami",
       location: "Trenggalek, Jawa Timur · Indonesia",
+    },
+    portfolio: {
+      eyebrow: "Portofolio",
+      sidebarLabel: "Pilih proyek portofolio",
+      title: "Sistem yang tumbuh dari komunitasnya.",
+      description:
+        "Karya yang berangkat dari kebutuhan nyata di Trenggalek—dari ruang cerita warga dan newsroom lokal hingga layanan keuangan yang dekat dengan masyarakat.",
+      visitSite: "Kunjungi situs",
+      sourceProfile: "Baca profil sumber",
+      projects: [
+        {
+          id: "nggalek",
+          label: "nggalek.co",
+          title: "Ruang bagi cerita lokal untuk tetap dekat dengan rumahnya.",
+          description:
+            "Nggalek.co mewadahi esai, opini, berita, feature, dokumentasi sejarah, dan cerita warga. Platform ini tumbuh sebagai ruang menulis dan belajar bersama, dengan perhatian khusus pada isu lingkungan dan ruang hidup Trenggalek.",
+          focus: "Penerbitan komunitas",
+        },
+        {
+          id: "kabartrenggalek",
+          label: "kabartrenggalek.com",
+          title: "Peliputan independen untuk komunitas yang terus bergerak.",
+          description:
+            "Kabar Trenggalek menyajikan berita dan perspektif tentang politik, ekonomi, pendidikan, kesehatan, peristiwa, feature, serta kehidupan di berbagai kecamatan. Redaksinya bernaung di bawah PT Maha Karya Migunani.",
+          focus: "Penerbitan berita",
+        },
+        {
+          id: "bprjwalita",
+          label: "bprjwalita.com",
+          title: "Layanan keuangan dengan jangkauan yang dekat dengan daerah.",
+          description:
+            "BPR Jwalita adalah bank perekonomian rakyat milik daerah yang berdiri pada 27 September 2004. Situsnya menghubungkan masyarakat dengan layanan simpanan, pinjaman, deposito, informasi produk, simulasi kredit, dan jaringan kantor di Kabupaten Trenggalek.",
+          focus: "Layanan keuangan",
+        },
+      ],
     },
 
     bento: {
@@ -337,7 +424,7 @@ export const translations: Record<Locale, LandingCopy> = {
 
     menuOpen: "Bukak menu",
     menuClose: "Tutup menu",
-    brandHome: "Beranda Nggalekco Labs",
+    brandHome: "Beranda nggalek.co Labs",
 
     hero: {
       titleFirst: "Teknologi ingkang dipunbangun",
@@ -347,7 +434,7 @@ export const translations: Record<Locale, LandingCopy> = {
         "kangge berkembang sesarengan.",
       ],
       description:
-        "Nggalekco Labs minangka perusahaan pangembangan software ingkang mapan wonten ing Trenggalek, Jawa Wétan. Kita makarya cedhak kaliyan pengguna kangge mangertosi kabutuhan, proses kerja, lan konteks setempat sadèrèngipun ngrancang solusi ingkang trep.",
+        "nggalek.co Labs minangka perusahaan pangembangan software ingkang mapan wonten ing Trenggalek, Jawa Wétan. Kita makarya cedhak kaliyan pengguna kangge mangertosi kabutuhan, proses kerja, lan konteks setempat sadèrèngipun ngrancang solusi ingkang trep.",
       startProject: "Miwiti proyek",
       exploreCapabilities: "Priksa keahlian kita",
     },
@@ -397,6 +484,41 @@ export const translations: Record<Locale, LandingCopy> = {
       title: "Sumangga kita mangertosi kabutuhan panjenengan.",
       button: "Hubungi kita",
       location: "Trenggalek, Jawa Wétan · Indonesia",
+    },
+    portfolio: {
+      eyebrow: "Portofolio",
+      sidebarLabel: "Pilih proyek portofolio",
+      title: "Sistem ingkang tuwuh saking komunitasipun.",
+      description:
+        "Karya ingkang tuwuh saking kabutuhan nyata ing Trenggalek—saking papan kangge crita warga, newsroom lokal, dumugi layanan keuangan ingkang cedhak kaliyan masyarakat.",
+      visitSite: "Dolanana situsipun",
+      sourceProfile: "Maca profil sumber",
+      projects: [
+        {
+          id: "nggalek",
+          label: "nggalek.co",
+          title: "Papan kangge crita lokal supados tetep cedhak kaliyan papan asalipun.",
+          description:
+            "Nggalek.co ngemot esai, opini, pawarta, feature, dokumentasi sejarah, lan crita warga. Platform punika tuwuh dados papan kangge warga Trenggalek nyerat lan sinau sesarengan, kanthi kawigatosan dhumateng isu lingkungan lan papan panguripan.",
+          focus: "Penerbitan komunitas",
+        },
+        {
+          id: "kabartrenggalek",
+          label: "kabartrenggalek.com",
+          title: "Peliputan independen kangge komunitas ingkang tansah obah.",
+          description:
+            "Kabar Trenggalek nyuguhaken pawarta lan perspektif babagan politik, ekonomi, pendidikan, kesehatan, prastawa, feature, saha gesang ing maneka kecamatan. Redaksinipun wonten ing sangandhaping PT Maha Karya Migunani.",
+          focus: "Penerbitan pawarta",
+        },
+        {
+          id: "bprjwalita",
+          label: "bprjwalita.com",
+          title: "Layanan keuangan kanthi jangkauan ingkang cedhak kaliyan daerah.",
+          description:
+            "BPR Jwalita punika bank perekonomian rakyat kagungan daerah ingkang madeg tanggal 27 September 2004. Situsipun nyambungaken masyarakat kaliyan layanan simpenan, pinjaman, deposito, informasi produk, simulasi kredit, lan jaringan kantor ing Kabupaten Trenggalek.",
+          focus: "Layanan keuangan",
+        },
+      ],
     },
 
     bento: {

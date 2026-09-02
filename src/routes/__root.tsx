@@ -1,6 +1,6 @@
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import { NotFound } from "@/components/not-found";
 import appCss from "../styles.css?url";
@@ -20,7 +20,7 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Nggalekco Labs — Akar lokal. Dampak global.",
+        title: "nggalek.co Labs — Akar lokal. Dampak global.",
       },
     ],
     links: [

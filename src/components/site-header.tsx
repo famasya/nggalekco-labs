@@ -2,7 +2,6 @@
 
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { Briefcase, Check, ChevronDown, Home, Languages, Menu, Users, X } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/motion/tabs";
@@ -35,7 +34,7 @@ function SiteBrand({
         />
       </span>
       <span className="text-md font-normal tracking-tight text-gray-900 dark:text-gray-100">
-        nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
+        nggalek.co <span className="text-gray-500 dark:text-gray-400">labs</span>
       </span>
     </Link>
   );
@@ -134,7 +133,6 @@ export function SiteHeader() {
   const text = translations[locale];
   const { pathname } = useLocation();
   const router = useRouter();
-  const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
   const isTeam = pathname === "/team";
   const isPortfolio = pathname === "/portofolios";
@@ -211,9 +209,6 @@ export function SiteHeader() {
   }, [isHome]);
 
   const tabsValue = isHome ? activeSection : "";
-  const activeNavigationTransition = reduceMotion
-    ? { duration: 0 }
-    : { type: "spring" as const, stiffness: 170, damping: 24, mass: 1.2 };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-white via-white to-transparent dark:from-black dark:via-black dark:to-transparent">
@@ -233,12 +228,11 @@ export function SiteHeader() {
           className="hidden items-center justify-self-center md:flex"
           aria-label={text.mainNavigationLabel}
         >
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/65 p-1.5 shadow-lg shadow-black/15 backdrop-blur-xl">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-gray-700 bg-gray-900 p-1.5 shadow-lg shadow-black/15">
             <Tabs
               value={tabsValue}
               onValueChange={handleSection}
               variant="pill"
-              layoutId="site-header-active-navigation"
               className="inline-block"
             >
               <TabsList className="gap-1.5 bg-transparent p-0">
@@ -246,8 +240,8 @@ export function SiteHeader() {
                   <TabsTrigger
                     key={value}
                     value={value}
-                    className="min-h-11 px-5 py-2.5 font-normal text-white/70 hover:bg-white/10 hover:text-white data-[state=active]:text-gray-950"
-                    indicatorClassName="bg-white shadow-md shadow-black/20"
+                    className="min-h-11 px-5 py-2.5 font-normal text-gray-300 hover:bg-white/10 hover:text-white data-[state=active]:text-gray-950"
+                    indicatorClassName="site-nav-active-indicator bg-white shadow-md shadow-black/20"
                   >
                     <span className="inline-flex items-center gap-2">
                       <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -261,16 +255,12 @@ export function SiteHeader() {
               to="/team"
               className={cn(
                 "relative inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
-                isTeam ? "text-gray-950" : "text-white/70 hover:bg-white/10 hover:text-white",
+                isTeam ? "text-gray-950" : "text-gray-300 hover:bg-white/10 hover:text-white",
               )}
             >
               {isTeam && (
-                <motion.span
-                  layoutId="site-header-active-navigation"
-                  layout="position"
-                  style={{ borderRadius: 9999 }}
-                  transition={activeNavigationTransition}
-                  className="absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
+                <span
+                  className="site-nav-active-indicator absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
                   aria-hidden="true"
                 />
               )}
@@ -283,16 +273,12 @@ export function SiteHeader() {
               to="/portofolios"
               className={cn(
                 "relative inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
-                isPortfolio ? "text-gray-950" : "text-white/70 hover:bg-white/10 hover:text-white",
+                isPortfolio ? "text-gray-950" : "text-gray-300 hover:bg-white/10 hover:text-white",
               )}
             >
               {isPortfolio && (
-                <motion.span
-                  layoutId="site-header-active-navigation"
-                  layout="position"
-                  style={{ borderRadius: 9999 }}
-                  transition={activeNavigationTransition}
-                  className="absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
+                <span
+                  className="site-nav-active-indicator absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
                   aria-hidden="true"
                 />
               )}

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 export type Theme = "light" | "dark";
 
-const STORAGE_KEY = "nggalekco-theme";
+const STORAGE_KEY = "nggalek.co-theme";
 const DEFAULT_THEME: Theme = "dark";
 
 function isTheme(value: string | null): value is Theme {

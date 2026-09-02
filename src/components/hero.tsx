@@ -74,11 +74,11 @@ export function Hero() {
   const [locale] = useLocale();
   const text = translations[locale];
   useEffect(() => {
-    document.title = `Nggalekco Labs — ${text.metaTitle}`;
+    document.title = `nggalek.co Labs — ${text.metaTitle}`;
   }, [locale, text]);
 
   return (
-    <div id="home" className="overflow-x-clip bg-black text-white">
+    <div id="home" className="overflow-x-clip bg-white text-gray-900 dark:bg-black dark:text-white">
       <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-white lg:min-h-[calc(100svh-6rem)]">
         <div
           className="pointer-events-none absolute inset-0 z-0 [--hero-grid-line:rgb(209_213_219_/_0.32)] dark:[--hero-grid-line:rgb(75_85_99_/_0.24)]"

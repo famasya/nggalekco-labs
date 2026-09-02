@@ -57,7 +57,7 @@ export function SiteFooter() {
                 />
               </span>
               <span className="text-md font-normal tracking-tight text-gray-900 dark:text-gray-100">
-                nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
+                nggalek.co <span className="text-gray-500 dark:text-gray-400">labs</span>
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-6 text-gray-600 dark:text-gray-300">
@@ -124,7 +124,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
-          <span>© 2026 Nggalekco Labs</span>
+          <span>© 2026 nggalek.co Labs</span>
           <span>{text.contact.location}</span>
         </div>
       </div>
