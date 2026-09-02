@@ -502,6 +502,15 @@ export function Globe3D({
           powerPreference: "high-performance",
         }}
         dpr={[1, 2]}
+        onCreated={({ gl }) => {
+          const canvas = gl.domElement;
+          canvas.addEventListener("webglcontextlost", (e) => {
+            e.preventDefault();
+          });
+          canvas.addEventListener("webglcontextrestored", () => {
+            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          });
+        }}
         camera={{
           fov: 45,
           near: 0.1,

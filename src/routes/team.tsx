@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SiteFooter } from "@/components/site-footer";
 import { Accordion, type AccordionItemData } from "@/components/ui/r-accordion";
-import { useLocale } from "@/lib/locale";
 import { translations } from "@/lib/landing-copy";
+import { useLocale } from "@/lib/locale";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -28,8 +28,7 @@ function Team() {
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
       <main className="flex-1">
-        <section className="mx-auto max-w-7xl px-6 pb-24 pt-20 lg:px-10 lg:pb-32 lg:pt-28">
-          <p className="text-xs uppercase tracking-[0.24em] text-gray-500">{text.nav.approach}</p>
+        <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-10 lg:pb-32">
           <div className="mt-6 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-28">
             <div>
               <h1 className="max-w-3xl text-5xl font-normal leading-tight tracking-tight text-gray-100 sm:text-6xl lg:text-7xl">

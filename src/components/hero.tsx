@@ -1,16 +1,16 @@
 "use client";
 
+import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { lazy, Suspense, useEffect, useSyncExternalStore } from "react";
-import { Link } from "@tanstack/react-router";
 
 import { buttonStyles } from "@/components/base/buttons/button";
 import { Bento02 } from "@/components/bento-02";
 import { SiteFooter } from "@/components/site-footer";
 import type { GlobeMarker } from "@/components/ui/3d-globe";
 import { DiaText } from "@/components/ui/dia-text";
-import { useLocale } from "@/lib/locale";
 import { translations } from "@/lib/landing-copy";
+import { useLocale } from "@/lib/locale";
 import { useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
@@ -115,7 +115,7 @@ export function Hero() {
                 wrap
               />
             </h1>
-            <p className="mt-6 max-w-lg text-base leading-7 text-gray-600 dark:text-gray-300 lg:text-lg lg:leading-7">
+            <p className="mt-6 max-w-lg text-base font-light leading-7 text-gray-600 dark:text-gray-300 lg:text-lg lg:leading-7">
               {text.hero.description}
             </p>
             <div className="pointer-events-auto mt-8 flex w-full min-w-0 flex-col gap-3 sm:flex-row">

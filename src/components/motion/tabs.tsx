@@ -42,6 +42,7 @@ export function Tabs({
   value,
   onValueChange,
   variant = "pill",
+  layoutId: layoutIdProp,
   children,
   className,
 }: {
@@ -49,11 +50,13 @@ export function Tabs({
   value?: string;
   onValueChange?: (value: string) => void;
   variant?: Variant;
+  layoutId?: string;
   children: ReactNode;
   className?: string;
 }) {
   const [internalValue, setInternalValue] = useState(defaultValue ?? "");
-  const layoutId = useId();
+  const generatedLayoutId = useId();
+  const layoutId = layoutIdProp ?? generatedLayoutId;
   const reduce = useReducedMotion();
   const controlled = value !== undefined;
   const currentValue = controlled ? value : internalValue;

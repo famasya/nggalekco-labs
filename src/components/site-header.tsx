@@ -2,6 +2,7 @@
 
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { Briefcase, Check, ChevronDown, Home, Languages, Menu, Users, X } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/motion/tabs";
@@ -133,6 +134,7 @@ export function SiteHeader() {
   const text = translations[locale];
   const { pathname } = useLocation();
   const router = useRouter();
+  const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
   const isTeam = pathname === "/team";
   const isPortfolio = pathname === "/portofolios";
@@ -209,6 +211,9 @@ export function SiteHeader() {
   }, [isHome]);
 
   const tabsValue = isHome ? activeSection : "";
+  const activeNavigationTransition = reduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 170, damping: 24, mass: 1.2 };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-white via-white to-transparent dark:from-black dark:via-black dark:to-transparent">
@@ -233,6 +238,7 @@ export function SiteHeader() {
               value={tabsValue}
               onValueChange={handleSection}
               variant="pill"
+              layoutId="site-header-active-navigation"
               className="inline-block"
             >
               <TabsList className="gap-1.5 bg-transparent p-0">
@@ -254,26 +260,46 @@ export function SiteHeader() {
             <Link
               to="/team"
               className={cn(
-                "inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
-                isTeam
-                  ? "bg-white text-gray-950 shadow-md shadow-black/20"
-                  : "text-white/70 hover:bg-white/10 hover:text-white",
+                "relative inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
+                isTeam ? "text-gray-950" : "text-white/70 hover:bg-white/10 hover:text-white",
               )}
             >
-              <Users size={16} strokeWidth={1.75} aria-hidden="true" />
-              {text.nav.approach}
+              {isTeam && (
+                <motion.span
+                  layoutId="site-header-active-navigation"
+                  layout="position"
+                  style={{ borderRadius: 9999 }}
+                  transition={activeNavigationTransition}
+                  className="absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
+                  aria-hidden="true"
+                />
+              )}
+              <span className="relative z-10 inline-flex items-center gap-2">
+                <Users size={16} strokeWidth={1.75} aria-hidden="true" />
+                {text.nav.approach}
+              </span>
             </Link>
             <Link
               to="/portofolios"
               className={cn(
-                "inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
-                isPortfolio
-                  ? "bg-white text-gray-950 shadow-md shadow-black/20"
-                  : "text-white/70 hover:bg-white/10 hover:text-white",
+                "relative inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-normal transition-colors",
+                isPortfolio ? "text-gray-950" : "text-white/70 hover:bg-white/10 hover:text-white",
               )}
             >
-              <Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />
-              {text.nav.portfolio}
+              {isPortfolio && (
+                <motion.span
+                  layoutId="site-header-active-navigation"
+                  layout="position"
+                  style={{ borderRadius: 9999 }}
+                  transition={activeNavigationTransition}
+                  className="absolute inset-0 rounded-full bg-white shadow-md shadow-black/20"
+                  aria-hidden="true"
+                />
+              )}
+              <span className="relative z-10 inline-flex items-center gap-2">
+                <Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />
+                {text.nav.portfolio}
+              </span>
             </Link>
           </div>
         </nav>

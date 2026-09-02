@@ -3,7 +3,7 @@ export type Locale = "id" | "en" | "jv";
 export const localeOptions: Array<{ value: Locale; label: string }> = [
   { value: "id", label: "Bahasa Indonesia" },
   { value: "en", label: "English" },
-  { value: "jv", label: "Basa Jawa (Krama Inggil)" },
+  { value: "jv", label: "Basa Jawa" },
 ];
 
 export type BentoCopy = {
@@ -73,113 +73,6 @@ export type LandingCopy = {
 };
 
 export const translations: Record<Locale, LandingCopy> = {
-  id: {
-    languageLabel: "Bahasa",
-    mainNavigationLabel: "Navigasi utama",
-    mobileNavigationLabel: "Navigasi seluler",
-    nav: {
-      home: "Beranda",
-      capabilities: "Keahlian",
-      approach: "Tim",
-      contact: "Kontak",
-      portfolio: "Portofolio",
-    },
-    themeLabel: "Mode Baca",
-    themeLight: "Beralih ke mode terang",
-    themeDark: "Beralih ke mode gelap",
-    themeLightMode: "Terang",
-    themeDarkMode: "Gelap",
-    menuOpen: "Buka menu",
-    menuClose: "Tutup menu",
-    brandHome: "Beranda Nggalekco Labs",
-    hero: {
-      titleFirst: "Akar lokal.",
-      titleSecond: ["Dampak global.", "Perangkat lunak berguna.", "Sistem yang lebih baik."],
-      description:
-        "Nggalekco Labs adalah perusahaan pengembangan perangkat lunak hiper-lokal yang berbasis di Trenggalek, Jawa Timur — menghadirkan keahlian nasional dan global untuk menyelesaikan persoalan setempat.",
-      startProject: "Mulai proyek",
-      exploreCapabilities: "Jelajahi keahlian",
-    },
-    capabilities: {
-      title: "Teknologi secukupnya untuk kebutuhan yang tepat.",
-      description:
-        "Kami bekerja erat dengan orang-orang yang paling memahami masalahnya, membentuk perangkat lunak yang berguna sejak hari pertama dan siap untuk langkah berikutnya.",
-    },
-    approach: {
-      title: "Dekat untuk peduli. Berpengalaman untuk mewujudkan.",
-      description:
-        "Perangkat lunak yang baik dimulai dengan mendengarkan. Kami membawa kejernihan, keterampilan, dan momentum untuk mengubah masalah yang berarti menjadi keunggulan yang bertahan lama.",
-      items: [
-        {
-          id: "listen",
-          title: "Dengarkan dengan saksama",
-          content:
-            "Kami memulai dari konteks di balik masalah, agar solusi pertama berpijak pada pekerjaan yang sudah dilakukan orang-orang.",
-        },
-        {
-          id: "shape",
-          title: "Bentuk sistem yang tepat",
-          content:
-            "Kami mengubah peluang yang paling jelas menjadi produk atau sistem yang fokus dan berguna sejak hari pertama.",
-        },
-        {
-          id: "deliver",
-          title: "Wujudkan dengan momentum",
-          content:
-            "Kami membangun untuk kemajuan yang konsisten, meninggalkan fondasi yang dapat beradaptasi seiring berkembangnya pekerjaan.",
-        },
-      ],
-    },
-    team: {
-      eyebrow: "Tim",
-      title: "Orang-orang di balik sistem yang berguna.",
-      description:
-        "Kami membawa perhatian, pengalaman, dan rasa ingin tahu untuk membangun perangkat lunak yang terasa berguna sejak hari pertama.",
-      button: "Kenali tim",
-    },
-    contact: {
-      title: "Punya persoalan lokal dengan peluang yang lebih besar?",
-      button: "Sapa kami",
-      location: "Trenggalek, Jawa Timur · Indonesia",
-    },
-    bento: {
-      systemsEyebrow: "Sistem yang terus bergerak",
-      systemsTitle: "Dibangun untuk saat ini, siap untuk langkah berikutnya.",
-      engineeringCopy:
-        "Rekayasa yang penuh perhatian, dari sketsa pertama hingga operasional yang stabil.",
-      reliableEyebrow: "Andal sejak dirancang",
-      reliableCopy:
-        "Fondasi yang tenang untuk perangkat lunak yang harus mendapatkan kepercayaan setiap hari.",
-      connectedEyebrow: "Cara berpikir yang terhubung",
-      networkStats: [
-        { label: "Pengantaran edge", value: "99,99%" },
-        { label: "Layanan inti", value: "99,99%" },
-        { label: "Sistem data", value: "99,99%" },
-      ],
-      trafficLabel: "Lonjakan trafik terdeteksi",
-      trafficCopy:
-        "Kami menskalakan bagian sistem yang tepat sebelum hari yang sibuk berubah menjadi masalah.",
-      alertsEyebrow: "Peringatan cerdas",
-      alertsCopy:
-        "Sinyal yang berguna hadir lebih awal, dengan konteks yang cukup untuk ditindaklanjuti.",
-      capabilitiesEyebrow: "Yang kami hadirkan",
-      capabilities: [
-        {
-          title: "Produk digital",
-          copy: "Produk yang jelas dan tangguh, terasa matang sejak interaksi pertama.",
-        },
-        {
-          title: "Perangkat lunak khusus",
-          copy: "Sistem praktis yang mengurangi hambatan dalam pekerjaan tim sehari-hari.",
-        },
-        {
-          title: "Platform & data",
-          copy: "Jaringan penghubung yang menjaga operasi, informasi, dan orang-orang tetap bergerak.",
-        },
-      ],
-    },
-    metaTitle: "Akar lokal. Dampak global.",
-  },
   en: {
     languageLabel: "Language",
     mainNavigationLabel: "Main navigation",
@@ -283,115 +176,283 @@ export const translations: Record<Locale, LandingCopy> = {
     },
     metaTitle: "Local roots. Global impact.",
   },
+  id: {
+    languageLabel: "Bahasa",
+    mainNavigationLabel: "Navigasi utama",
+    mobileNavigationLabel: "Navigasi seluler",
+
+    nav: {
+      home: "Beranda",
+      capabilities: "Keahlian",
+      approach: "Pendekatan",
+      contact: "Kontak",
+      portfolio: "Portofolio",
+    },
+
+    themeLabel: "Tampilan",
+    themeLight: "Gunakan mode terang",
+    themeDark: "Gunakan mode gelap",
+    themeLightMode: "Terang",
+    themeDarkMode: "Gelap",
+
+    menuOpen: "Buka menu",
+    menuClose: "Tutup menu",
+    brandHome: "Beranda Nggalekco Labs",
+
+    hero: {
+      titleFirst: "Teknologi",
+      titleSecond: [
+        "yang dibangun dengan pemahaman lokal.",
+        "sesuai kebutuhan pengguna.",
+        "untuk berkembang bersama.",
+      ],
+      description:
+        "Nggalekco Labs adalah perusahaan pengembangan perangkat lunak yang berbasis di Trenggalek, Jawa Timur. Kami bekerja dekat dengan pengguna untuk memahami kebutuhan, proses kerja, dan konteks setempat sebelum merancang solusi yang tepat.",
+      startProject: "Mulai proyek",
+      exploreCapabilities: "Lihat keahlian kami",
+    },
+
+    capabilities: {
+      title: "Solusi yang berangkat dari pemahaman lokal.",
+      description:
+        "Setiap organisasi memiliki kebutuhan dan cara kerja yang berbeda. Kami memahami konteks pengguna terlebih dahulu, kemudian menentukan teknologi yang paling sesuai untuk mendukungnya.",
+    },
+
+    approach: {
+      title: "Pemahaman lokal untuk solusi yang tepat.",
+      description:
+        "Pendekatan hyperlocal kami berangkat dari kedekatan dengan pengguna dan lingkungan tempat mereka bekerja. Kami memahami konteks, kebutuhan, serta proses yang berjalan sebelum menentukan bagaimana teknologi dapat membantu.",
+
+      items: [
+        {
+          id: "listen",
+          title: "Memahami konteks",
+          content:
+            "Kami mempelajari pengguna, proses kerja, kebutuhan, keterbatasan, dan kondisi setempat sebelum mengambil keputusan teknis.",
+        },
+        {
+          id: "shape",
+          title: "Merancang solusi",
+          content:
+            "Dari pemahaman tersebut, kami merancang sistem yang sesuai dengan kebutuhan tanpa menambahkan kompleksitas yang tidak diperlukan.",
+        },
+        {
+          id: "deliver",
+          title: "Membangun bersama",
+          content:
+            "Kami mengembangkan sistem secara bertahap, mengevaluasinya bersama pengguna, dan menyesuaikannya seiring berkembangnya kebutuhan.",
+        },
+      ],
+    },
+
+    team: {
+      eyebrow: "Tim",
+      title: "Tim yang memahami sebelum membangun.",
+      description:
+        "Kami menggabungkan pengalaman teknis dengan pemahaman terhadap pengguna dan konteks setempat untuk menghasilkan perangkat lunak yang tepat guna dan dapat diandalkan.",
+      button: "Lihat pendekatan",
+    },
+
+    contact: {
+      title: "Mari memahami kebutuhan Anda.",
+      button: "Hubungi kami",
+      location: "Trenggalek, Jawa Timur · Indonesia",
+    },
+
+    bento: {
+      systemsEyebrow: "Dibangun sesuai kebutuhan",
+      systemsTitle: "Teknologi yang mengikuti konteks, bukan sebaliknya.",
+
+      engineeringCopy:
+        "Kami memahami bagaimana sebuah sistem akan digunakan sebelum menentukan bagaimana sistem tersebut perlu dibangun.",
+
+      reliableEyebrow: "Andal sejak awal",
+      reliableCopy:
+        "Fondasi teknis yang baik membantu sistem tetap stabil, aman, dan siap dikembangkan.",
+
+      connectedEyebrow: "Sistem yang terhubung",
+
+      networkStats: [
+        {
+          label: "Edge delivery",
+          value: "99,99%",
+        },
+        {
+          label: "Layanan inti",
+          value: "99,99%",
+        },
+        {
+          label: "Sistem data",
+          value: "99,99%",
+        },
+      ],
+
+      trafficLabel: "Peningkatan trafik terdeteksi",
+      trafficCopy:
+        "Kapasitas sistem dapat disesuaikan seiring meningkatnya penggunaan agar layanan tetap berjalan dengan baik.",
+
+      alertsEyebrow: "Pemantauan sistem",
+      alertsCopy:
+        "Informasi penting tersedia lebih awal agar permasalahan dapat segera diketahui dan ditangani.",
+
+      capabilitiesEyebrow: "Keahlian kami",
+
+      capabilities: [
+        {
+          title: "Produk digital",
+          copy: "Produk digital yang dirancang berdasarkan kebutuhan pengguna dan konteks penggunaannya.",
+        },
+        {
+          title: "Perangkat lunak khusus",
+          copy: "Sistem yang dibangun mengikuti kebutuhan dan proses kerja organisasi.",
+        },
+        {
+          title: "Platform & data",
+          copy: "Infrastruktur, integrasi, dan pengelolaan data yang menghubungkan sistem dan proses kerja.",
+        },
+      ],
+    },
+
+    metaTitle: "Teknologi dengan pemahaman lokal.",
+  },
+
   jv: {
     languageLabel: "Basa",
     mainNavigationLabel: "Navigasi utama",
     mobileNavigationLabel: "Navigasi seluler",
+
     nav: {
-      home: "Kaca ngarep",
-      capabilities: "Kaprigelan",
-      approach: "Tim",
+      home: "Beranda",
+      capabilities: "Keahlian",
+      approach: "Pendekatan",
       contact: "Kontak",
       portfolio: "Portofolio",
     },
-    themeLabel: "Mode maca",
-    themeLight: "Ngalih menyang mode padhang",
-    themeDark: "Ngalih menyang mode peteng",
+
+    themeLabel: "Tampilan",
+    themeLight: "Gunakake mode padhang",
+    themeDark: "Gunakake mode peteng",
     themeLightMode: "Padhang",
     themeDarkMode: "Peteng",
+
     menuOpen: "Bukak menu",
     menuClose: "Tutup menu",
-    brandHome: "Kaca ngarep Nggalekco Labs",
+    brandHome: "Beranda Nggalekco Labs",
+
     hero: {
-      titleFirst: "Oyod lokal.",
+      titleFirst: "Teknologi ingkang dipunbangun",
       titleSecond: [
-        "Dampak global.",
-        "Piranti lunak ingkang migunani.",
-        "Sistem ingkang langkung sae.",
+        "kanthi pemahaman lokal.",
+        "manut kabutuhan pengguna.",
+        "kangge berkembang sesarengan.",
       ],
       description:
-        "Nggalekco Labs punika perusahaan pangembangan piranti lunak hiper-lokal ingkang mapan wonten ing Trenggalek, Jawa Timur — ngaturaken kawruh saha pengalaman nasional lan global kangge ngrampungaken perkawis lokal.",
+        "Nggalekco Labs minangka perusahaan pangembangan software ingkang mapan wonten ing Trenggalek, Jawa Wétan. Kita makarya cedhak kaliyan pengguna kangge mangertosi kabutuhan, proses kerja, lan konteks setempat sadèrèngipun ngrancang solusi ingkang trep.",
       startProject: "Miwiti proyek",
-      exploreCapabilities: "Jelajahi kaprigelan",
+      exploreCapabilities: "Priksa keahlian kita",
     },
+
     capabilities: {
-      title: "Teknologi ingkang cekap kangge pakaryan ingkang trep.",
+      title: "Solusi ingkang dipunwiwiti saking pemahaman lokal.",
       description:
-        "Kawula makarya raket kaliyan para tiyang ingkang paling mangertos perkawisipun, mbentuk piranti lunak ingkang migunani wiwit dinten kapisan lan siap tumrap langkah salajengipun.",
+        "Saben organisasi gadhah kabutuhan lan cara kerja ingkang beda. Kita mangertosi konteks pengguna rumiyin, lajeng nemtokaken teknologi ingkang paling trep kangge ndhukung kabutuhan kasebut.",
     },
+
     approach: {
-      title: "Caket supados saged nggatekaken. Mumpuni supados saged nglantaraken.",
+      title: "Pemahaman lokal, solusi ingkang trep.",
       description:
-        "Piranti lunak ingkang sae kawiwitan saking mirengaken. Kawula ngaturaken kajelasan, kawruh pakaryan, saha daya panggulawenthah kangge ndadosaken perkawis ingkang wigatos dados kaunggulan ingkang lestari.",
+        "Pendekatan hyperlocal kita dipunwiwiti saking kedekatan kaliyan pengguna lan lingkungan papan piyambakipun makarya. Kita mangertosi konteks, kabutuhan, lan proses ingkang sampun lumampah sadèrèngipun nemtokaken peran teknologi.",
+
       items: [
         {
           id: "listen",
-          title: "Mirengaken kanthi permati",
+          title: "Mangertosi konteks",
           content:
-            "Kawula miwiti saking konteks ing sakitering perkawis, supados solusi kapisan adhedhasar pakaryan ingkang sampun katindakaken.",
+            "Kita nyinau pengguna, proses kerja, kabutuhan, keterbatasan, lan kondisi setempat sadèrèngipun nemtokaken keputusan teknis.",
         },
         {
           id: "shape",
-          title: "Mujudaken sistem ingkang leres",
+          title: "Ngrancang solusi",
           content:
-            "Kawula ngowahi kalodhangan ingkang paling cetha dados produk utawi sistem ingkang fokus saha migunani wiwit dinten kapisan.",
+            "Saking pemahaman kasebut, kita ngrancang sistem ingkang trep kaliyan kabutuhan tanpa nambah kerumitan ingkang boten dipunperlokaken.",
         },
         {
           id: "deliver",
-          title: "Nglantaraken kanthi teteg",
+          title: "Mbangun sesarengan",
           content:
-            "Kawula mbangun kangge kamajuan ingkang ajeg, kanthi landhesan ingkang saged nyelarasaken kaliyan tuwuhipun pakaryan.",
+            "Kita ngembangaken sistem kanthi bertahap, ngevaluasi sesarengan kaliyan pengguna, lan nyelarasaken kaliyan kabutuhan ingkang terus berkembang.",
         },
       ],
     },
+
     team: {
       eyebrow: "Tim",
-      title: "Para tiyang ing wingking sistem ingkang migunani.",
+      title: "Tim ingkang mangertosi sadèrèngipun mbangun.",
       description:
-        "Kawula ngaturaken kawigatosan, pengalaman, saha raos kepengin mangertosi kangge mbangun piranti lunak ingkang migunani wiwit dinten kapisan.",
-      button: "Mangertosi tim",
+        "Kita nggabungaken pengalaman teknis kaliyan pemahaman tumrap pengguna lan konteks setempat kangge ngasilaken software ingkang trep lan saged dipunandelaken.",
+      button: "Kenali tim kita",
     },
+
     contact: {
-      title: "Wonten perkawis lokal kanthi kalodhangan ingkang langkung ageng?",
-      button: "Sumangga nyarios",
+      title: "Sumangga kita mangertosi kabutuhan panjenengan.",
+      button: "Hubungi kita",
       location: "Trenggalek, Jawa Wétan · Indonesia",
     },
+
     bento: {
-      systemsEyebrow: "Sistem ingkang tansah lumampah",
-      systemsTitle: "Dibangun kangge sapunika, siyap tumrap langkah salajengipun.",
+      systemsEyebrow: "Dibangun manut kabutuhan",
+      systemsTitle: "Teknologi ingkang manut konteks, boten kosok wangsulipun.",
+
       engineeringCopy:
-        "Rekayasa ingkang dipun-gatosaken, wiwit sketsa kapisan dumugi operasional ingkang ajeg.",
-      reliableEyebrow: "Andal wiwit dirancang",
+        "Kita mangertosi rumiyin kados pundi sistem badhe dipunginakaken sadèrèngipun nemtokaken kados pundi sistem kasebut kedah dipunbangun.",
+
+      reliableEyebrow: "Andal wiwit awal",
       reliableCopy:
-        "Landhesan ingkang tentrem kangge piranti lunak ingkang kedah pikantuk kapitadosan saben dinten.",
-      connectedEyebrow: "Pamanggih ingkang sambung",
+        "Pondasi teknis ingkang sae mbiyantu sistem tetep stabil, aman, lan siap dipunkembangaken.",
+
+      connectedEyebrow: "Sistem ingkang terhubung",
+
       networkStats: [
-        { label: "Pangiriman edge", value: "99,99%" },
-        { label: "Layanan inti", value: "99,99%" },
-        { label: "Sistem data", value: "99,99%" },
+        {
+          label: "Edge delivery",
+          value: "99,99%",
+        },
+        {
+          label: "Layanan inti",
+          value: "99,99%",
+        },
+        {
+          label: "Sistem data",
+          value: "99,99%",
+        },
       ],
-      trafficLabel: "Lonjakan trafik kapranggokaken",
+
+      trafficLabel: "Peningkatan trafik terdeteksi",
       trafficCopy:
-        "Kawula nyelarasaken pérangan sistem ingkang trep sadèrèngipun dinten ingkang rame dados perkawis.",
-      alertsEyebrow: "Pènget cerdas",
+        "Kapasitas sistem saged dipunsesuaikaken kaliyan tambahing panggunaan supados layanan tetep lumampah kanthi sae.",
+
+      alertsEyebrow: "Pemantauan sistem",
       alertsCopy:
-        "Pratandha ingkang migunani rawuh langkung wiwitan, kanthi konteks ingkang cekap kangge tumindak.",
-      capabilitiesEyebrow: "Ingkang kawula aturaken",
+        "Informasi penting saged dipunmangertosi langkung rumiyin supados permasalahan saged enggal dipuntangani.",
+
+      capabilitiesEyebrow: "Keahlian kita",
+
       capabilities: [
         {
           title: "Produk digital",
-          copy: "Produk ingkang cetha saha tangguh, sampun katingal mateng wiwit interaksi kapisan.",
+          copy: "Produk digital ingkang dipunrancang adhedhasar kabutuhan pengguna lan konteks panggunaanipun.",
         },
         {
-          title: "Piranti lunak khusus",
-          copy: "Sistem praktis ingkang nyuda alangan wonten ing pakaryan tim saben dinten.",
+          title: "Software khusus",
+          copy: "Sistem ingkang dipunbangun manut kabutuhan lan proses kerja organisasi.",
         },
         {
           title: "Platform & data",
-          copy: "Jaringan panyambung ingkang njagi operasi, informasi, saha para tiyang tansah obah.",
+          copy: "Infrastruktur, integrasi, lan pengelolaan data ingkang nyambungaken sistem kaliyan proses kerja.",
         },
       ],
     },
-    metaTitle: "Oyod lokal. Dampak global.",
+
+    metaTitle: "Teknologi kanthi pemahaman lokal.",
   },
 };

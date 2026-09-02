@@ -180,7 +180,7 @@ export function Accordion({
       collapsible
       onValueChange={(value) => setOpenItems(value ? [value] : [])}
       type="single"
-      value={openItems[0]}
+      value={openItems[0] ?? ""}
     >
       {rows}
     </AccordionPrimitive.Root>
