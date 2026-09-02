@@ -24,10 +24,10 @@ export function SiteFooter() {
       id="contact"
       className="scroll-mt-10 border-t border-gray-200 bg-white text-gray-900 dark:border-gray-800 dark:bg-black dark:text-white"
     >
-      <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
-        <div className="flex flex-col items-start justify-between gap-12 lg:flex-row lg:items-end">
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
-            <h2 className="mt-4 text-4xl font-normal leading-none tracking-tighter dark:text-gray-100 sm:text-6xl">
+            <h2 className="text-2xl font-normal dark:text-gray-100 sm:text-4xl">
               {text.contact.title}
             </h2>
           </div>
@@ -41,7 +41,7 @@ export function SiteFooter() {
           </BoardButtonLink>
         </div>
 
-        <div className="mt-20 grid gap-12 border-t border-gray-200 pt-10 dark:border-gray-800 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-8 border-t border-gray-200 pt-8 dark:border-gray-800 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <Link
               to="/"
@@ -123,7 +123,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
           <span>© 2026 Nggalekco Labs</span>
           <span>{text.contact.location}</span>
         </div>
