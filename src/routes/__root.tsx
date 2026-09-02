@@ -2,9 +2,14 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
+import { NotFound } from "@/components/not-found";
 import appCss from "../styles.css?url";
 
+import { SiteHeader } from "@/components/site-header";
+import { ThemeSync } from "@/lib/theme";
+
 export const Route = createRootRoute({
+  notFoundComponent: NotFound,
   head: () => ({
     meta: [
       {
@@ -35,11 +40,13 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
+    <html lang="id" className="dark">
       <head>
         <HeadContent />
       </head>
       <body>
+        <ThemeSync />
+        <SiteHeader />
         {children}
         <TanStackDevtools
           config={{

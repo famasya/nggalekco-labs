@@ -1,28 +1,17 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  Compass,
-  Home,
-  Languages,
-  Layers,
-  Mail,
-  Menu,
-  Waves,
-  X,
-} from "lucide-react";
-import { lazy, Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { lazy, Suspense, useEffect, useSyncExternalStore } from "react";
+import { Link } from "@tanstack/react-router";
 
-import { ButtonLink as BoardButtonLink } from "@/components/base/buttons/button";
+import { buttonStyles } from "@/components/base/buttons/button";
 import { Bento02 } from "@/components/bento-02";
-import { Tabs, TabsList, TabsTrigger } from "@/components/motion/tabs";
+import { SiteFooter } from "@/components/site-footer";
 import type { GlobeMarker } from "@/components/ui/3d-globe";
 import { DiaText } from "@/components/ui/dia-text";
-import { Accordion, type AccordionItemData } from "@/components/ui/r-accordion";
-import { Switch } from "@/components/ui/r-switch";
-import { localeOptions, translations, type Locale } from "@/lib/landing-copy";
+import { useLocale } from "@/lib/locale";
+import { translations } from "@/lib/landing-copy";
+import { useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
 const markers: GlobeMarker[] = [
@@ -37,13 +26,6 @@ const markers: GlobeMarker[] = [
 const HERO_TEXT_REVEAL_DURATION = 0.6;
 const HERO_TEXT_REPEAT_DELAY = 3.5;
 
-const navigationItems = [
-  { value: "home", href: "#home", icon: Home },
-  { value: "capabilities", href: "#capabilities", icon: Layers },
-  { value: "approach", href: "#approach", icon: Compass },
-  { value: "contact", href: "#contact", icon: Mail },
-] as const;
-
 const Globe3D = lazy(async () => {
   const module = await import("@/components/ui/3d-globe");
   return { default: module.Globe3D };
@@ -54,24 +36,6 @@ function useIsClient() {
     () => () => {},
     () => true,
     () => false,
-  );
-}
-
-function Brand({ label }: { label: string }) {
-  return (
-    <a className="group inline-flex items-center gap-3" href="#home" aria-label={label}>
-      <span className="grid size-10 place-items-center">
-        <img
-          src="/logo-light.png?v=2"
-          alt=""
-          className="size-full object-contain"
-          aria-hidden="true"
-        />
-      </span>
-      <span className="text-md font-normal tracking-tight text-gray-900 dark:text-gray-100">
-        nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
-      </span>
-    </a>
   );
 }
 
@@ -104,310 +68,17 @@ function HeroGlobe({ isDark }: { isDark: boolean }) {
   );
 }
 
-function getCurrentLabel(actionText: string) {
-  const words = actionText.trim().split(/\s+/);
-  const phrase = words.slice(-2).join(" ");
-  return phrase.charAt(0).toUpperCase() + phrase.slice(1);
-}
-
-function ThemeSwitch({
-  isDark,
-  mobile = false,
-  copy,
-  onCheckedChange,
-  wrapperClassName,
-}: {
-  isDark: boolean;
-  mobile?: boolean;
-  copy: { label: string; light: string; dark: string };
-  onCheckedChange: (checked: boolean) => void;
-  wrapperClassName?: string;
-}) {
-  const defaultWrapperClassName = mobile
-    ? "flex w-full items-center justify-between gap-4"
-    : "hidden gap-2 md:flex";
-  const label = isDark ? copy.label : getCurrentLabel(copy.light);
-
-  return (
-    <Switch
-      checked={isDark}
-      onCheckedChange={onCheckedChange}
-      size="default"
-      label={label}
-      labelClassName="text-xs font-normal text-gray-700 dark:text-gray-300"
-      wrapperClassName={wrapperClassName ?? defaultWrapperClassName}
-      title={isDark ? copy.light : copy.dark}
-      aria-label={isDark ? copy.light : copy.dark}
-      thumbContent={isDark ? "🌙" : "☀️"}
-      className="[--ic-accent:#f3f4f6] [--ic-card:#ffffff] [--ic-foreground:#111827] dark:[--ic-accent:#374151] dark:[--ic-card:#000000] dark:[--ic-foreground:#ffffff]"
-    />
-  );
-}
-
-function GlobalPreferencesDropdown({
-  locale,
-  label,
-  onChange,
-}: {
-  locale: Locale;
-  label: string;
-  onChange: (locale: Locale) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const currentOption = localeOptions.find((option) => option.value === locale) ?? localeOptions[0];
-
-  useEffect(() => {
-    if (!open) return;
-
-    const closeOnOutsideClick = (event: PointerEvent) => {
-      if (!containerRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("pointerdown", closeOnOutsideClick);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", closeOnOutsideClick);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [open]);
-
-  return (
-    <div ref={containerRef} className="relative">
-      <button
-        type="button"
-        className="inline-flex h-10 items-center gap-2 rounded-lg border border-gray-300 px-3 text-xs text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-900"
-        aria-label={`${label}: ${currentOption.label}`}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-controls="global-preferences-menu"
-        onClick={() => setOpen((isOpen) => !isOpen)}
-      >
-        <Languages size={15} strokeWidth={1.7} aria-hidden="true" />
-        <span>{currentOption.value.toUpperCase()}</span>
-        <ChevronDown
-          size={14}
-          strokeWidth={1.7}
-          className={cn("transition-transform", open && "rotate-180")}
-          aria-hidden="true"
-        />
-      </button>
-      {open && (
-        <dialog
-          id="global-preferences-menu"
-          open
-          aria-label={label}
-          className="absolute top-full left-0 right-auto z-50 m-0 mt-2 w-80 max-w-[calc(100vw-2rem)] min-w-0 overflow-hidden rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl dark:border-gray-800 dark:bg-gray-950 md:left-auto md:right-0"
-          onCancel={() => setOpen(false)}
-        >
-          <div className="px-3 pb-1 pt-2 text-xs uppercase tracking-widest text-gray-500 dark:text-gray-500">
-            {label}
-          </div>
-          <div>
-            {localeOptions.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                aria-pressed={locale === option.value}
-                className="flex w-full min-w-0 items-center justify-between gap-4 rounded-lg px-3 py-2.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900"
-                onClick={() => {
-                  onChange(option.value);
-                  setOpen(false);
-                }}
-              >
-                <span className="min-w-0 flex-1 whitespace-normal break-words">{option.label}</span>
-                {locale === option.value && <Check size={15} aria-hidden="true" />}
-              </button>
-            ))}
-          </div>
-        </dialog>
-      )}
-    </div>
-  );
-}
-
 export function Hero() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
-  const [locale, setLocale] = useState<Locale>("id");
-  const [activeNavigation, setActiveNavigation] = useState<string>(navigationItems[0].value);
-  const navigationTargetRef = useRef<string | null>(null);
+  const [theme] = useTheme();
+  const isDark = theme === "dark";
+  const [locale] = useLocale();
   const text = translations[locale];
-  const themeCopy = {
-    label: text.themeLabel,
-    light: text.themeLight,
-    dark: text.themeDark,
-  };
-  const approachItems: AccordionItemData[] = text.approach.items.map((item) => ({
-    id: item.id,
-    title: item.title,
-    content: <p>{item.content}</p>,
-  }));
-
   useEffect(() => {
-    document.documentElement.lang = locale;
     document.title = `Nggalekco Labs — ${text.metaTitle}`;
   }, [locale, text]);
 
-  const handleNavigation = (value: string) => {
-    navigationTargetRef.current = value;
-    setActiveNavigation(value);
-    const element = document.getElementById(value);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    window.location.hash = value;
-  };
-
-  useEffect(() => {
-    const sections = navigationItems
-      .map(({ value }) => ({ value, element: document.getElementById(value) }))
-      .filter(
-        (
-          section,
-        ): section is {
-          value: (typeof navigationItems)[number]["value"];
-          element: HTMLElement;
-        } => section.element !== null,
-      );
-
-    if (sections.length === 0) return;
-
-    let frame = 0;
-    const updateActiveNavigation = () => {
-      if (frame !== 0) return;
-
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        const readingLine = window.innerHeight * 0.35;
-        let current = sections[0].value;
-
-        for (const section of sections) {
-          if (section.element.getBoundingClientRect().top <= readingLine) {
-            current = section.value;
-          }
-        }
-
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-          current = sections[sections.length - 1].value;
-        }
-
-        const navigationTarget = navigationTargetRef.current;
-        if (navigationTarget) {
-          if (current !== navigationTarget) {
-            setActiveNavigation(navigationTarget);
-            return;
-          }
-          navigationTargetRef.current = null;
-        }
-
-        setActiveNavigation(current);
-      });
-    };
-
-    updateActiveNavigation();
-    window.addEventListener("scroll", updateActiveNavigation, { passive: true });
-    window.addEventListener("resize", updateActiveNavigation);
-
-    return () => {
-      window.removeEventListener("scroll", updateActiveNavigation);
-      window.removeEventListener("resize", updateActiveNavigation);
-      if (frame !== 0) cancelAnimationFrame(frame);
-    };
-  }, []);
-
   return (
-    <div
-      id="home"
-      className={cn("overflow-x-clip bg-white text-gray-900", isDark && "dark bg-black text-white")}
-    >
-      <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-white via-white to-transparent dark:from-black dark:via-black dark:to-transparent">
-        <div className="relative mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto] items-center px-6 py-6 md:grid-cols-[1fr_auto_1fr] lg:px-10 lg:py-8">
-          <Brand label={text.brandHome} />
-          <nav
-            className="hidden justify-self-center md:block"
-            aria-label={text.mainNavigationLabel}
-          >
-            <Tabs value={activeNavigation} onValueChange={handleNavigation} variant="pill">
-              <TabsList className="gap-1.5 rounded-full border border-white/15 bg-black/65 p-1.5 shadow-lg shadow-black/15 backdrop-blur-xl">
-                {navigationItems.map(({ value, icon: Icon }) => (
-                  <TabsTrigger
-                    key={value}
-                    value={value}
-                    className="min-h-11 px-5 py-2.5 font-normal text-white/70 hover:bg-white/10 hover:text-white data-[state=active]:text-gray-950"
-                    indicatorClassName="bg-white shadow-md shadow-black/20"
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
-                      {text.nav[value]}
-                    </span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </nav>
-          <div className="flex items-center gap-2 justify-self-end">
-            <div className="hidden md:block">
-              <GlobalPreferencesDropdown
-                locale={locale}
-                label={text.languageLabel}
-                onChange={setLocale}
-              />
-            </div>
-            <button
-              type="button"
-              className="grid size-10 place-items-center rounded-lg border border-gray-300 text-gray-700 transition-transform duration-150 ease-out active:scale-95 dark:border-gray-700 dark:text-gray-300 md:hidden"
-              aria-label={menuOpen ? text.menuClose : text.menuOpen}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-          {menuOpen && (
-            <nav
-              className="absolute inset-x-0 top-full z-30 mt-2 rounded-2xl border border-gray-200 bg-white/95 p-3 shadow-xl backdrop-blur-xl dark:border-gray-700 dark:bg-black/95 md:hidden"
-              aria-label={text.mobileNavigationLabel}
-            >
-              {navigationItems.map(({ value, href, icon: Icon }) => (
-                <a
-                  key={href}
-                  className="block rounded-xl px-4 py-3 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <span className="inline-flex items-center gap-3">
-                    <Icon size={15} strokeWidth={1.75} aria-hidden="true" />
-                    {text.nav[value]}
-                  </span>
-                </a>
-              ))}
-              <div className="mt-2 border-t border-gray-200 px-4 pt-4 dark:border-gray-800">
-                <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-500">
-                  {text.languageLabel}
-                </p>
-                <div className="mt-2 grid gap-1">
-                  {localeOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      aria-pressed={locale === option.value}
-                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                      onClick={() => setLocale(option.value)}
-                    >
-                      <span>{option.label}</span>
-                      {locale === option.value && <Check size={15} aria-hidden="true" />}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          )}
-        </div>
-      </header>
+    <div id="home" className="overflow-x-clip bg-black text-white">
       <section className="relative isolate min-h-screen overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-white">
         <div
           className="pointer-events-none absolute inset-0 z-0 [--hero-grid-line:rgb(209_213_219_/_0.32)] dark:[--hero-grid-line:rgb(75_85_99_/_0.24)]"
@@ -448,21 +119,31 @@ export function Hero() {
               {text.hero.description}
             </p>
             <div className="pointer-events-auto mt-9 flex w-full min-w-0 flex-col gap-3 sm:flex-row">
-              <BoardButtonLink
-                href="#contact"
-                variant="primary"
-                trailingIcon={ArrowUpRight}
-                className="page-button-primary pointer-events-auto !h-12 !rounded-xl !px-5 !text-base !font-normal dark:!text-gray-900"
+              <Link
+                to="/"
+                hash="contact"
+                className={cn(
+                  buttonStyles.base,
+                  buttonStyles.size.medium,
+                  buttonStyles.variant.primary,
+                  "page-button-primary pointer-events-auto !h-12 !rounded-xl !px-5 !text-base !font-normal dark:!text-gray-900",
+                )}
               >
-                {text.hero.startProject}
-              </BoardButtonLink>
-              <BoardButtonLink
-                href="#capabilities"
-                variant="secondary"
-                className="pointer-events-auto !h-12 !rounded-xl !px-5 !text-base !font-normal"
+                <span className={buttonStyles.label.medium}>{text.hero.startProject}</span>
+                <ArrowUpRight className={buttonStyles.icon.medium} aria-hidden="true" />
+              </Link>
+              <Link
+                to="/"
+                hash="capabilities"
+                className={cn(
+                  buttonStyles.base,
+                  buttonStyles.size.medium,
+                  buttonStyles.variant.secondary,
+                  "pointer-events-auto !h-12 !rounded-xl !px-5 !text-base !font-normal",
+                )}
               >
-                {text.hero.exploreCapabilities}
-              </BoardButtonLink>
+                <span className={buttonStyles.label.medium}>{text.hero.exploreCapabilities}</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -498,110 +179,28 @@ export function Hero() {
         </div>
       </section>
 
-      <section
-        id="approach"
-        className="scroll-mt-10 border-y border-gray-200 bg-white dark:border-gray-800 dark:bg-black"
-      >
+      <section className="scroll-mt-10 border-y border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-28 lg:px-10 lg:py-32">
           <div>
-            <h2 className="section-title mt-4 max-w-2xl dark:text-white">{text.approach.title}</h2>
+            <p className="eyebrow mb-5">{text.team.eyebrow}</p>
+            <h2 className="section-title max-w-2xl dark:text-white">{text.team.title}</h2>
           </div>
-          <div className="flex flex-col gap-8">
-            <div className="flex items-start gap-4 border-l border-gray-400 pl-6 dark:border-gray-600">
-              <Waves
-                className="mt-1 shrink-0 text-gray-700 dark:text-gray-200"
-                size={22}
-                strokeWidth={1.6}
-              />
-              <p className="text-base leading-7 text-gray-600 dark:text-gray-300">
-                {text.approach.description}
-              </p>
-            </div>
-            <Accordion
-              className="max-w-none"
-              defaultValue={["listen"]}
-              items={approachItems}
-              variant="quiet"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="contact"
-        className="scroll-mt-10 border-t border-gray-200 bg-white px-6 py-24 text-gray-900 dark:border-gray-800 dark:bg-black dark:text-white lg:px-10 lg:py-28"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col items-start justify-between gap-12 lg:flex-row lg:items-end">
-            <div className="max-w-2xl">
-              <h2 className="mt-4 text-4xl font-normal leading-none tracking-tighter dark:text-gray-100 sm:text-6xl">
-                {text.contact.title}
-              </h2>
-            </div>
-            <BoardButtonLink
-              href="mailto:hello@nggalek.co"
-              variant="primary"
-              trailingIcon={ArrowUpRight}
-              className="page-button-primary pointer-events-auto shrink-0 !h-12 !rounded-xl !px-5 !text-base !font-normal dark:!text-gray-900"
+          <div>
+            <p className="max-w-xl text-base leading-7 text-gray-600 dark:text-gray-300">
+              {text.team.description}
+            </p>
+            <Link
+              to="/team"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-normal text-gray-900 underline-offset-4 transition-colors hover:text-gray-500 hover:underline dark:text-gray-100 dark:hover:text-gray-400"
             >
-              {text.contact.button}
-            </BoardButtonLink>
-          </div>
-
-          <div className="mt-20 grid gap-12 border-t border-gray-200 pt-10 dark:border-gray-800 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="space-y-4">
-              <Brand label={text.brandHome} />
-              <p className="max-w-xs text-sm leading-6 text-gray-600 dark:text-gray-300">
-                {text.hero.description}
-              </p>
-            </div>
-
-            <div>
-              <p className="eyebrow mb-4">{text.mainNavigationLabel}</p>
-              <ul className="space-y-2">
-                {navigationItems.map(({ value, href }) => (
-                  <li key={value}>
-                    <a
-                      href={href}
-                      className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
-                    >
-                      {text.nav[value]}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="eyebrow mb-4">Contact</p>
-              <a
-                href="mailto:hello@nggalek.co"
-                className="block text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
-              >
-                hello@nggalek.co
-              </a>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                {text.contact.location}
-              </p>
-            </div>
-
-            <div>
-              <p className="eyebrow mb-4">{text.themeLabel}</p>
-              <ThemeSwitch
-                isDark={isDark}
-                copy={themeCopy}
-                onCheckedChange={setIsDark}
-                wrapperClassName="flex items-center gap-2.5"
-              />
-            </div>
-          </div>
-
-          <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
-            <span>© 2026 Nggalekco Labs</span>
-            <span>{text.contact.location}</span>
+              {text.team.button}
+              <ArrowUpRight size={16} strokeWidth={1.7} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>
+
+      <SiteFooter />
     </div>
   );
 }

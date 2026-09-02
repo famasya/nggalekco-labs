@@ -169,6 +169,8 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
       [activeIndex, fixedWidth, isMulti, measuredWidths, wrap],
     );
 
+    const containerW = !wrap ? (fixedW ?? animatedW) : undefined;
+
     const containerStyle = useMemo(
       (): NonNullable<DiaTextMotionProps["style"]> => ({
         ...(isMulti && {
@@ -177,10 +179,10 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
           whiteSpace: wrap ? "normal" : "nowrap",
           ...(wrap && { maxWidth: "100%" }),
           verticalAlign: "text-center" as CSSProperties["verticalAlign"],
-          ...(!wrap && fixedW != null && { width: fixedW }),
+          ...(!wrap && containerW != null && { width: containerW }),
         }),
       }),
-      [fixedW, isMulti, wrap],
+      [containerW, isMulti, wrap],
     );
 
     const contentStyle = useMemo(
@@ -391,7 +393,6 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
 
     return (
       <motion.span
-        animate={animatedW != null ? { width: animatedW } : undefined}
         className={cn(
           componentThemeClassName,
           "align-bottom text-inherit leading-[1.25]",
@@ -399,7 +400,6 @@ const DiaTextReveal = forwardRef<HTMLSpanElement, DiaTextRevealProps>(
         )}
         ref={setRefs}
         style={containerStyle}
-        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         {...props}
       >
         <motion.span

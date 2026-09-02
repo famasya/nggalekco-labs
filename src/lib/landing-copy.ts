@@ -31,10 +31,13 @@ export type LandingCopy = {
     capabilities: string;
     approach: string;
     contact: string;
+    portfolio: string;
   };
   themeLabel: string;
   themeLight: string;
   themeDark: string;
+  themeLightMode: string;
+  themeDarkMode: string;
   menuOpen: string;
   menuClose: string;
   brandHome: string;
@@ -54,6 +57,12 @@ export type LandingCopy = {
     description: string;
     items: Array<{ id: string; title: string; content: string }>;
   };
+  team: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    button: string;
+  };
   contact: {
     title: string;
     button: string;
@@ -71,12 +80,15 @@ export const translations: Record<Locale, LandingCopy> = {
     nav: {
       home: "Beranda",
       capabilities: "Keahlian",
-      approach: "Pendekatan",
+      approach: "Tim",
       contact: "Kontak",
+      portfolio: "Portofolio",
     },
     themeLabel: "Mode Baca",
     themeLight: "Beralih ke mode terang",
     themeDark: "Beralih ke mode gelap",
+    themeLightMode: "Terang",
+    themeDarkMode: "Gelap",
     menuOpen: "Buka menu",
     menuClose: "Tutup menu",
     brandHome: "Beranda Nggalekco Labs",
@@ -117,6 +129,13 @@ export const translations: Record<Locale, LandingCopy> = {
             "Kami membangun untuk kemajuan yang konsisten, meninggalkan fondasi yang dapat beradaptasi seiring berkembangnya pekerjaan.",
         },
       ],
+    },
+    team: {
+      eyebrow: "Tim",
+      title: "Orang-orang di balik sistem yang berguna.",
+      description:
+        "Kami membawa perhatian, pengalaman, dan rasa ingin tahu untuk membangun perangkat lunak yang terasa berguna sejak hari pertama.",
+      button: "Kenali tim",
     },
     contact: {
       title: "Punya persoalan lokal dengan peluang yang lebih besar?",
@@ -168,12 +187,15 @@ export const translations: Record<Locale, LandingCopy> = {
     nav: {
       home: "Home",
       capabilities: "Capabilities",
-      approach: "Approach",
+      approach: "Team",
       contact: "Contact",
+      portfolio: "Portfolio",
     },
     themeLabel: "Reading Mode",
     themeLight: "Switch to light mode",
     themeDark: "Switch to dark mode",
+    themeLightMode: "Light",
+    themeDarkMode: "Dark",
     menuOpen: "Open menu",
     menuClose: "Close menu",
     brandHome: "Nggalekco Labs home",
@@ -214,6 +236,13 @@ export const translations: Record<Locale, LandingCopy> = {
             "We build for steady progress, leaving you with a foundation that can adapt as the work grows.",
         },
       ],
+    },
+    team: {
+      eyebrow: "Team",
+      title: "The people behind useful systems.",
+      description:
+        "We bring care, experience, and curiosity to build software that feels useful from the first day.",
+      button: "Meet the team",
     },
     contact: {
       title: "Have a local problem with a bigger opportunity?",
@@ -261,12 +290,15 @@ export const translations: Record<Locale, LandingCopy> = {
     nav: {
       home: "Kaca ngarep",
       capabilities: "Kaprigelan",
-      approach: "Pendekatan",
+      approach: "Tim",
       contact: "Kontak",
+      portfolio: "Portofolio",
     },
-    themeLabel: "Mode peteng",
+    themeLabel: "Mode maca",
     themeLight: "Ngalih menyang mode padhang",
     themeDark: "Ngalih menyang mode peteng",
+    themeLightMode: "Padhang",
+    themeDarkMode: "Peteng",
     menuOpen: "Bukak menu",
     menuClose: "Tutup menu",
     brandHome: "Kaca ngarep Nggalekco Labs",
@@ -311,6 +343,13 @@ export const translations: Record<Locale, LandingCopy> = {
             "Kawula mbangun kangge kamajuan ingkang ajeg, kanthi landhesan ingkang saged nyelarasaken kaliyan tuwuhipun pakaryan.",
         },
       ],
+    },
+    team: {
+      eyebrow: "Tim",
+      title: "Para tiyang ing wingking sistem ingkang migunani.",
+      description:
+        "Kawula ngaturaken kawigatosan, pengalaman, saha raos kepengin mangertosi kangge mbangun piranti lunak ingkang migunani wiwit dinten kapisan.",
+      button: "Mangertosi tim",
     },
     contact: {
       title: "Wonten perkawis lokal kanthi kalodhangan ingkang langkung ageng?",

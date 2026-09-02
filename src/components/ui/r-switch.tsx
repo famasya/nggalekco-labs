@@ -245,8 +245,8 @@ function useSwitchThumbMotion(
   const playPressSquash = React.useCallback(() => {
     stopScaleAnimations();
     scaleControlsRef.current = [
-      animate(thumbScaleX, 0.82, springFast),
-      animate(thumbScaleY, 1.1, springFast),
+      animate(thumbScaleX, 0.96, springFast),
+      animate(thumbScaleY, 1.02, springFast),
     ];
   }, [stopScaleAnimations, thumbScaleX, thumbScaleY]);
 
@@ -368,6 +368,11 @@ function SwitchThumbVisual({
   sizing: SwitchSizing;
   thumbContent?: React.ReactNode;
 }) {
+  const thumbTransform = useTransform(
+    [motionState.thumbX, motionState.thumbScaleX, motionState.thumbScaleY],
+    ([x, sx, sy]) => `translateX(${x}px) scaleX(${sx}) scaleY(${sy})`,
+  );
+
   return (
     <motion.span
       aria-hidden
@@ -375,9 +380,7 @@ function SwitchThumbVisual({
       style={{
         width: sizing.thumbSize,
         height: sizing.thumbSize,
-        x: motionState.thumbX,
-        scaleX: motionState.thumbScaleX,
-        scaleY: motionState.thumbScaleY,
+        transform: thumbTransform,
         marginLeft: sizing.thumbMargin,
         backgroundColor: "var(--ic-card)",
         boxShadow: "0 1px 4px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06)",

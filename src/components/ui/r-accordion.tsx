@@ -37,18 +37,14 @@ function AccordionContent({
         <AccordionPrimitive.Content asChild forceMount>
           <motion.div
             animate={{
-              height: "auto",
+              gridTemplateRows: "1fr",
               opacity: 1,
               clipPath: "inset(0% 0% 0% 0%)",
             }}
             className="overflow-hidden"
-            exit={{
-              height: 0,
-              opacity: 0,
-              clipPath: "inset(0% 0% 100% 0%)",
-            }}
+            style={{ display: "grid" }}
             initial={{
-              height: 0,
+              gridTemplateRows: "0fr",
               opacity: 0,
               clipPath: "inset(0% 0% 100% 0%)",
             }}
@@ -56,13 +52,13 @@ function AccordionContent({
               reduceMotion
                 ? { duration: 0 }
                 : {
-                    height: { type: "spring", stiffness: 180, damping: 28, mass: 0.9 },
+                    gridTemplateRows: { type: "spring", stiffness: 180, damping: 28, mass: 0.9 },
                     opacity: { duration: 0.18, ease: [0.23, 1, 0.32, 1] },
                     clipPath: { duration: 0.2, ease: [0.23, 1, 0.32, 1] },
                   }
             }
           >
-            <div className="pb-5 pl-7 pr-2 text-sm leading-7 text-gray-600 dark:text-gray-300">
+            <div className="pb-3 pl-7 pr-4 text-sm leading-7 text-gray-600 dark:text-gray-300">
               {children}
             </div>
           </motion.div>
@@ -86,7 +82,9 @@ function AccordionRow({
   return (
     <AccordionPrimitive.Item
       className={cn(
-        quiet ? "py-3.5" : "group border-gray-200 border-t first:border-t-0 dark:border-gray-800",
+        quiet
+          ? "rounded-xl bg-gray-100 px-4 py-2.5 dark:bg-gray-900"
+          : "group border-gray-200 border-t first:border-t-0 dark:border-gray-800",
         !quiet && "px-1",
       )}
       value={item.id}
@@ -166,7 +164,7 @@ export function Accordion({
   if (multiple) {
     return (
       <AccordionPrimitive.Root
-        className={cn("w-full", className)}
+        className={cn("w-full", quiet && "space-y-1.5", className)}
         onValueChange={setOpenItems}
         type="multiple"
         value={openItems}
@@ -178,7 +176,7 @@ export function Accordion({
 
   return (
     <AccordionPrimitive.Root
-      className={cn("w-full", className)}
+      className={cn("w-full", quiet && "space-y-1.5", className)}
       collapsible
       onValueChange={(value) => setOpenItems(value ? [value] : [])}
       type="single"

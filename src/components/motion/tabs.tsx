@@ -191,8 +191,8 @@ export function TabsContent({
   return (
     <motion.div
       key={value}
-      initial={{ opacity: 0, y: reduce ? 0 : 4 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, transform: reduce ? "translateY(0px)" : "translateY(4px)" }}
+      animate={{ opacity: 1, transform: "translateY(0px)" }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       className={cn("mt-4", className)}
     >

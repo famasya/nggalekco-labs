@@ -837,7 +837,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    transition: none;
+    transition:
+      background-color var(--button-transition-ms) ease,
+      border-color var(--button-transition-ms) ease,
+      color var(--button-transition-ms) ease;
     transform: none;
   }
 }
