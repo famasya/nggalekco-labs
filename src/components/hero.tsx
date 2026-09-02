@@ -5,6 +5,7 @@ import {
   Check,
   ChevronDown,
   Compass,
+  Home,
   Languages,
   Layers,
   Mail,
@@ -37,6 +38,7 @@ const HERO_TEXT_REVEAL_DURATION = 0.6;
 const HERO_TEXT_REPEAT_DELAY = 3.5;
 
 const navigationItems = [
+  { value: "home", href: "#home", icon: Home },
   { value: "capabilities", href: "#capabilities", icon: Layers },
   { value: "approach", href: "#approach", icon: Compass },
   { value: "contact", href: "#contact", icon: Mail },
@@ -57,7 +59,7 @@ function useIsClient() {
 
 function Brand({ label }: { label: string }) {
   return (
-    <a className="group inline-flex items-center gap-3" href="#top" aria-label={label}>
+    <a className="group inline-flex items-center gap-3" href="#home" aria-label={label}>
       <span className="grid size-10 place-items-center">
         <img
           src="/logo-light.png?v=2"
@@ -66,7 +68,7 @@ function Brand({ label }: { label: string }) {
           aria-hidden="true"
         />
       </span>
-      <span className="text-[15px] font-normal tracking-[-0.02em] text-gray-900 dark:text-gray-100">
+      <span className="text-md font-normal tracking-tight text-gray-900 dark:text-gray-100">
         nggalekco <span className="text-gray-500 dark:text-gray-400">labs</span>
       </span>
     </a>
@@ -102,27 +104,38 @@ function HeroGlobe({ isDark }: { isDark: boolean }) {
   );
 }
 
+function getCurrentLabel(actionText: string) {
+  const words = actionText.trim().split(/\s+/);
+  const phrase = words.slice(-2).join(" ");
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1);
+}
+
 function ThemeSwitch({
   isDark,
   mobile = false,
   copy,
   onCheckedChange,
+  wrapperClassName,
 }: {
   isDark: boolean;
   mobile?: boolean;
   copy: { label: string; light: string; dark: string };
   onCheckedChange: (checked: boolean) => void;
+  wrapperClassName?: string;
 }) {
+  const defaultWrapperClassName = mobile
+    ? "flex w-full items-center justify-between gap-4"
+    : "hidden gap-2 md:flex";
+  const label = isDark ? copy.label : getCurrentLabel(copy.light);
+
   return (
     <Switch
       checked={isDark}
       onCheckedChange={onCheckedChange}
       size="default"
-      label={copy.label}
+      label={label}
       labelClassName="text-xs font-normal text-gray-700 dark:text-gray-300"
-      wrapperClassName={
-        mobile ? "flex w-full items-center justify-between gap-4" : "hidden gap-2 md:flex"
-      }
+      wrapperClassName={wrapperClassName ?? defaultWrapperClassName}
       title={isDark ? copy.light : copy.dark}
       aria-label={isDark ? copy.light : copy.dark}
       thumbContent={isDark ? "🌙" : "☀️"}
@@ -134,17 +147,11 @@ function ThemeSwitch({
 function GlobalPreferencesDropdown({
   locale,
   label,
-  isDark,
-  themeCopy,
   onChange,
-  onThemeChange,
 }: {
   locale: Locale;
   label: string;
-  isDark: boolean;
-  themeCopy: { label: string; light: string; dark: string };
   onChange: (locale: Locale) => void;
-  onThemeChange: (isDark: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -192,11 +199,11 @@ function GlobalPreferencesDropdown({
         <dialog
           id="global-preferences-menu"
           open
-          aria-label={`${label} and appearance`}
+          aria-label={label}
           className="absolute top-full left-0 right-auto z-50 m-0 mt-2 w-80 max-w-[calc(100vw-2rem)] min-w-0 overflow-hidden rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl dark:border-gray-800 dark:bg-gray-950 md:left-auto md:right-0"
           onCancel={() => setOpen(false)}
         >
-          <div className="px-3 pb-1 pt-2 text-[10px] uppercase tracking-[0.16em] text-gray-500 dark:text-gray-500">
+          <div className="px-3 pb-1 pt-2 text-xs uppercase tracking-widest text-gray-500 dark:text-gray-500">
             {label}
           </div>
           <div>
@@ -216,9 +223,6 @@ function GlobalPreferencesDropdown({
               </button>
             ))}
           </div>
-          <div className="mt-1 border-t border-gray-200 px-3 pb-2 pt-3 dark:border-gray-800">
-            <ThemeSwitch isDark={isDark} mobile copy={themeCopy} onCheckedChange={onThemeChange} />
-          </div>
         </dialog>
       )}
     </div>
@@ -229,7 +233,7 @@ export function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [locale, setLocale] = useState<Locale>("id");
-  const [activeNavigation, setActiveNavigation] = useState("capabilities");
+  const [activeNavigation, setActiveNavigation] = useState<string>(navigationItems[0].value);
   const navigationTargetRef = useRef<string | null>(null);
   const text = translations[locale];
   const themeCopy = {
@@ -251,6 +255,10 @@ export function Hero() {
   const handleNavigation = (value: string) => {
     navigationTargetRef.current = value;
     setActiveNavigation(value);
+    const element = document.getElementById(value);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     window.location.hash = value;
   };
 
@@ -313,11 +321,11 @@ export function Hero() {
 
   return (
     <div
-      id="top"
+      id="home"
       className={cn("overflow-x-clip bg-white text-gray-900", isDark && "dark bg-black text-white")}
     >
       <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-white via-white to-transparent dark:from-black dark:via-black dark:to-transparent">
-        <div className="relative mx-auto grid w-full max-w-[1320px] grid-cols-[1fr_auto] items-center px-6 py-6 md:grid-cols-[1fr_auto_1fr] lg:px-10 lg:py-8">
+        <div className="relative mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto] items-center px-6 py-6 md:grid-cols-[1fr_auto_1fr] lg:px-10 lg:py-8">
           <Brand label={text.brandHome} />
           <nav
             className="hidden justify-self-center md:block"
@@ -329,7 +337,7 @@ export function Hero() {
                   <TabsTrigger
                     key={value}
                     value={value}
-                    className="min-h-[44px] px-5 py-2.5 font-normal text-white/70 hover:bg-white/10 hover:text-white data-[state=active]:text-gray-950"
+                    className="min-h-11 px-5 py-2.5 font-normal text-white/70 hover:bg-white/10 hover:text-white data-[state=active]:text-gray-950"
                     indicatorClassName="bg-white shadow-md shadow-black/20"
                   >
                     <span className="inline-flex items-center gap-2">
@@ -346,15 +354,12 @@ export function Hero() {
               <GlobalPreferencesDropdown
                 locale={locale}
                 label={text.languageLabel}
-                isDark={isDark}
-                themeCopy={themeCopy}
                 onChange={setLocale}
-                onThemeChange={setIsDark}
               />
             </div>
             <button
               type="button"
-              className="grid size-10 place-items-center rounded-lg border border-gray-300 text-gray-700 transition-transform duration-[140ms] ease-out active:scale-[0.97] dark:border-gray-700 dark:text-gray-300 md:hidden"
+              className="grid size-10 place-items-center rounded-lg border border-gray-300 text-gray-700 transition-transform duration-150 ease-out active:scale-95 dark:border-gray-700 dark:text-gray-300 md:hidden"
               aria-label={menuOpen ? text.menuClose : text.menuOpen}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((open) => !open)}
@@ -381,7 +386,7 @@ export function Hero() {
                 </a>
               ))}
               <div className="mt-2 border-t border-gray-200 px-4 pt-4 dark:border-gray-800">
-                <p className="text-[10px] uppercase tracking-[0.16em] text-gray-500 dark:text-gray-500">
+                <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-500">
                   {text.languageLabel}
                 </p>
                 <div className="mt-2 grid gap-1">
@@ -390,7 +395,7 @@ export function Hero() {
                       key={option.value}
                       type="button"
                       aria-pressed={locale === option.value}
-                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900"
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                       onClick={() => setLocale(option.value)}
                     >
                       <span>{option.label}</span>
@@ -398,20 +403,12 @@ export function Hero() {
                     </button>
                   ))}
                 </div>
-                <div className="mt-3 border-t border-gray-200 pt-3 dark:border-gray-800">
-                  <ThemeSwitch
-                    isDark={isDark}
-                    mobile
-                    copy={themeCopy}
-                    onCheckedChange={setIsDark}
-                  />
-                </div>
               </div>
             </nav>
           )}
         </div>
       </header>
-      <section className="relative isolate min-h-[700px] overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-white lg:min-h-[790px]">
+      <section className="relative isolate min-h-screen overflow-hidden bg-white text-gray-900 dark:bg-black dark:text-white">
         <div
           className="pointer-events-none absolute inset-0 z-0 [--hero-grid-line:rgb(209_213_219_/_0.32)] dark:[--hero-grid-line:rgb(75_85_99_/_0.24)]"
           style={{
@@ -426,9 +423,9 @@ export function Hero() {
           }}
           aria-hidden="true"
         />
-        <div className="pointer-events-none relative z-10 mx-auto flex min-h-[590px] w-full max-w-[1320px] items-center px-6 pb-24 pt-12 lg:min-h-[650px] lg:px-10 lg:pb-32 lg:pt-16">
-          <div className="pointer-events-none w-full min-w-0 max-w-[620px]">
-            <h1 className="min-w-0 max-w-[680px] text-[clamp(3.15rem,6vw,5.8rem)] font-normal leading-[1.25] tracking-[-0.07em] text-gray-900 dark:text-gray-100 lg:text-[clamp(4rem,5vw,5rem)]">
+        <div className="pointer-events-none relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-center px-6 pb-24 pt-12 lg:px-10 lg:pb-32 lg:pt-16">
+          <div className="pointer-events-none w-full min-w-0 max-w-2xl">
+            <h1 className="min-w-0 max-w-2xl text-5xl font-normal leading-tight tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl lg:text-7xl">
               <DiaText
                 className="font-normal"
                 text={text.hero.titleFirst}
@@ -447,7 +444,7 @@ export function Hero() {
                 wrap
               />
             </h1>
-            <p className="mt-7 max-w-[500px] text-[16px] leading-7 text-gray-600 dark:text-gray-300 lg:text-[17px] lg:leading-7">
+            <p className="mt-7 max-w-lg text-base leading-7 text-gray-600 dark:text-gray-300 lg:text-lg lg:leading-7">
               {text.hero.description}
             </p>
             <div className="pointer-events-auto mt-9 flex w-full min-w-0 flex-col gap-3 sm:flex-row">
@@ -486,7 +483,7 @@ export function Hero() {
 
       <section
         id="capabilities"
-        className="mx-auto max-w-[1320px] scroll-mt-10 bg-white px-6 py-24 dark:bg-black lg:px-10 lg:py-28"
+        className="mx-auto max-w-7xl scroll-mt-10 bg-white px-6 py-24 dark:bg-black lg:px-10 lg:py-28"
       >
         <div>
           <div>
@@ -505,7 +502,7 @@ export function Hero() {
         id="approach"
         className="scroll-mt-10 border-y border-gray-200 bg-white dark:border-gray-800 dark:bg-black"
       >
-        <div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-28 lg:px-10 lg:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-28 lg:px-10 lg:py-32">
           <div>
             <h2 className="section-title mt-4 max-w-2xl dark:text-white">{text.approach.title}</h2>
           </div>
@@ -532,26 +529,77 @@ export function Hero() {
 
       <section
         id="contact"
-        className="scroll-mt-10 bg-white px-6 py-24 text-gray-900 dark:bg-black dark:text-white lg:px-10 lg:py-28"
+        className="scroll-mt-10 border-t border-gray-200 bg-white px-6 py-24 text-gray-900 dark:border-gray-800 dark:bg-black dark:text-white lg:px-10 lg:py-28"
       >
-        <div className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
-          <div>
-            <h2 className="mt-4 max-w-3xl text-4xl font-normal leading-[1] tracking-[-0.06em] dark:text-gray-100 sm:text-6xl">
-              {text.contact.title}
-            </h2>
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col items-start justify-between gap-12 lg:flex-row lg:items-end">
+            <div className="max-w-2xl">
+              <h2 className="mt-4 text-4xl font-normal leading-none tracking-tighter dark:text-gray-100 sm:text-6xl">
+                {text.contact.title}
+              </h2>
+            </div>
+            <BoardButtonLink
+              href="mailto:hello@nggalek.co"
+              variant="primary"
+              trailingIcon={ArrowUpRight}
+              className="page-button-primary pointer-events-auto shrink-0 !h-12 !rounded-xl !px-5 !text-base !font-normal dark:!text-gray-900"
+            >
+              {text.contact.button}
+            </BoardButtonLink>
           </div>
-          <BoardButtonLink
-            href="mailto:hello@nggalekco.id"
-            variant="primary"
-            trailingIcon={ArrowUpRight}
-            className="page-button-primary pointer-events-auto shrink-0 !h-12 !rounded-xl !px-5 !text-base !font-normal dark:!text-gray-900"
-          >
-            {text.contact.button}
-          </BoardButtonLink>
-        </div>
-        <div className="mx-auto mt-20 flex max-w-[1320px] flex-col justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
-          <span>© 2026 Nggalekco Labs</span>
-          <span>{text.contact.location}</span>
+
+          <div className="mt-20 grid gap-12 border-t border-gray-200 pt-10 dark:border-gray-800 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-4">
+              <Brand label={text.brandHome} />
+              <p className="max-w-xs text-sm leading-6 text-gray-600 dark:text-gray-300">
+                {text.hero.description}
+              </p>
+            </div>
+
+            <div>
+              <p className="eyebrow mb-4">{text.mainNavigationLabel}</p>
+              <ul className="space-y-2">
+                {navigationItems.map(({ value, href }) => (
+                  <li key={value}>
+                    <a
+                      href={href}
+                      className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
+                    >
+                      {text.nav[value]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="eyebrow mb-4">Contact</p>
+              <a
+                href="mailto:hello@nggalek.co"
+                className="block text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
+              >
+                hello@nggalek.co
+              </a>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                {text.contact.location}
+              </p>
+            </div>
+
+            <div>
+              <p className="eyebrow mb-4">{text.themeLabel}</p>
+              <ThemeSwitch
+                isDark={isDark}
+                copy={themeCopy}
+                onCheckedChange={setIsDark}
+                wrapperClassName="flex items-center gap-2.5"
+              />
+            </div>
+          </div>
+
+          <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-500 sm:flex-row">
+            <span>© 2026 Nggalekco Labs</span>
+            <span>{text.contact.location}</span>
+          </div>
         </div>
       </section>
     </div>

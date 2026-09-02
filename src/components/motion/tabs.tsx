@@ -119,7 +119,7 @@ export function TabsTrigger({
         data-state={active ? "active" : "inactive"}
         onClick={() => setValue(value)}
         className={cn(
-          "relative isolate -mb-px inline-flex min-h-[44px] items-center px-3 pb-2.5 pt-1 text-sm font-medium transition-colors",
+          "relative isolate -mb-px inline-flex min-h-11 items-center px-3 pb-2.5 pt-1 text-sm font-medium transition-colors",
           active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
           className,
         )}

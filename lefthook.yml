@@ -1,6 +1,8 @@
 pre-commit:
   parallel: true
   commands:
+    typecheck:
+      run: pnpm run typecheck
     format:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,yaml,yml,md}"
       run: pnpm exec oxfmt {staged_files}

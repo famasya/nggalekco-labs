@@ -27,6 +27,7 @@ export type LandingCopy = {
   mainNavigationLabel: string;
   mobileNavigationLabel: string;
   nav: {
+    home: string;
     capabilities: string;
     approach: string;
     contact: string;
@@ -68,11 +69,12 @@ export const translations: Record<Locale, LandingCopy> = {
     mainNavigationLabel: "Navigasi utama",
     mobileNavigationLabel: "Navigasi seluler",
     nav: {
+      home: "Beranda",
       capabilities: "Keahlian",
       approach: "Pendekatan",
       contact: "Kontak",
     },
-    themeLabel: "Mode gelap",
+    themeLabel: "Mode Baca",
     themeLight: "Beralih ke mode terang",
     themeDark: "Beralih ke mode gelap",
     menuOpen: "Buka menu",
@@ -164,11 +166,12 @@ export const translations: Record<Locale, LandingCopy> = {
     mainNavigationLabel: "Main navigation",
     mobileNavigationLabel: "Mobile navigation",
     nav: {
+      home: "Home",
       capabilities: "Capabilities",
       approach: "Approach",
       contact: "Contact",
     },
-    themeLabel: "Dark mode",
+    themeLabel: "Reading Mode",
     themeLight: "Switch to light mode",
     themeDark: "Switch to dark mode",
     menuOpen: "Open menu",
@@ -256,6 +259,7 @@ export const translations: Record<Locale, LandingCopy> = {
     mainNavigationLabel: "Navigasi utama",
     mobileNavigationLabel: "Navigasi seluler",
     nav: {
+      home: "Kaca ngarep",
       capabilities: "Kaprigelan",
       approach: "Pendekatan",
       contact: "Kontak",

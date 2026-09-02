@@ -18,10 +18,10 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
       <article className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-b from-gray-50 via-white to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-gray-900 dark:to-black lg:col-span-7 lg:row-span-2 lg:p-9">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+            <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">
               {copy.systemsEyebrow}
             </p>
-            <h3 className="mt-5 max-w-md text-3xl font-normal leading-[1.02] tracking-[-0.055em] text-gray-900 dark:text-gray-100 sm:text-4xl">
+            <h3 className="mt-5 max-w-md text-3xl font-normal leading-none tracking-tighter text-gray-900 dark:text-gray-100 sm:text-4xl">
               {copy.systemsTitle}
             </h3>
           </div>
@@ -33,7 +33,7 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
         <div className="mt-16 border-t border-gray-200 pt-5 dark:border-gray-800">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-5xl font-normal tracking-[-0.07em] text-gray-900 dark:text-gray-100 sm:text-6xl">
+              <p className="text-5xl font-normal tracking-tighter text-gray-900 dark:text-gray-100 sm:text-6xl">
                 24/7
               </p>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
@@ -61,10 +61,10 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
       <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+            <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">
               {copy.reliableEyebrow}
             </p>
-            <p className="mt-5 text-5xl font-normal tracking-[-0.07em] text-gray-900 dark:text-gray-100">
+            <p className="mt-5 text-5xl font-normal tracking-tighter text-gray-900 dark:text-gray-100">
               99.99%
             </p>
           </div>
@@ -77,7 +77,7 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
 
       <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 lg:col-span-5 lg:p-8">
         <div className="flex items-center justify-between gap-4">
-          <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+          <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">
             {copy.connectedEyebrow}
           </p>
           <Globe2 className="text-gray-600 dark:text-gray-300" size={22} strokeWidth={1.5} />
@@ -111,7 +111,7 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
 
         <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+            <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">
               {copy.alertsEyebrow}
             </p>
             <Bell className="text-gray-600 dark:text-gray-300" size={20} strokeWidth={1.5} />
@@ -123,7 +123,7 @@ export function Bento02({ copy }: { copy: BentoCopy }) {
 
         <article className="rounded-2xl border border-gray-200 bg-gradient-to-b from-white via-gray-50 to-gray-100 p-7 dark:border-gray-800 dark:from-gray-950 dark:via-black dark:to-gray-950 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+            <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">
               {copy.capabilitiesEyebrow}
             </p>
             <TrendingUp className="text-gray-600 dark:text-gray-300" size={20} strokeWidth={1.5} />
