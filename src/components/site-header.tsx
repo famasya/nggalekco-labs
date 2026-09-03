@@ -21,7 +21,7 @@ function SiteBrand({
   return (
     <Link
       to="/"
-      className="group inline-flex items-center gap-3"
+      className="group inline-flex items-center gap-3 hover:opacity-80"
       aria-label={label}
       onClick={onClick}
     >
@@ -213,17 +213,19 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-white via-white to-transparent dark:from-black dark:via-black dark:to-transparent">
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto] items-center px-6 py-6 md:grid-cols-[1fr_auto_1fr] lg:px-10 lg:py-8">
-        <SiteBrand
-          label={text.brandHome}
-          onClick={
-            isHome
-              ? (event) => {
-                  event.preventDefault();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-              : undefined
-          }
-        />
+        <div>
+          <SiteBrand
+            label={text.brandHome}
+            onClick={
+              isHome
+                ? (event) => {
+                    event.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                : undefined
+            }
+          />
+        </div>
         <nav
           className="hidden items-center justify-self-center md:flex"
           aria-label={text.mainNavigationLabel}
