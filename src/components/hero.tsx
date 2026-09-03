@@ -175,7 +175,6 @@ export function Hero() {
       <section className="scroll-mt-10 border-y border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-20 lg:px-10 lg:py-24">
           <div>
-            <p className="eyebrow mb-5">{text.team.eyebrow}</p>
             <h2 className="section-title max-w-2xl dark:text-white">{text.team.title}</h2>
           </div>
           <div>
