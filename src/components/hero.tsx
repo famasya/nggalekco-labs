@@ -1,70 +1,70 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
+import type { COBEOptions } from "cobe";
 import { ArrowUpRight } from "lucide-react";
-import { lazy, Suspense, useEffect, useSyncExternalStore } from "react";
+import { useEffect } from "react";
 
 import { buttonStyles } from "@/components/base/buttons/button";
 import { Bento02 } from "@/components/bento-02";
 import { SiteFooter } from "@/components/site-footer";
-import type { GlobeMarker } from "@/components/ui/3d-globe";
 import { DiaText } from "@/components/ui/dia-text";
+import { Globe } from "@/components/ui/globe";
 import { translations } from "@/lib/landing-copy";
 import { useLocale } from "@/lib/locale";
 import { useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
-const markers: GlobeMarker[] = [
-  {
-    lat: -8.05,
-    lng: 111.716,
-    icon: "place",
-    label: "Trenggalek",
-  },
-];
+const GLOBE_MARKERS: COBEOptions["markers"] = [{ location: [-8.05, 111.716], size: 0.08 }];
+
+const LIGHT_GLOBE_CONFIG: COBEOptions = {
+  width: 800,
+  height: 800,
+  onRender: () => {},
+  devicePixelRatio: 2,
+  phi: 3.52,
+  theta: -0.15,
+  dark: 0,
+  diffuse: 0.4,
+  mapSamples: 16000,
+  mapBrightness: 1.2,
+  baseColor: [1, 1, 1],
+  markerColor: [251 / 255, 100 / 255, 21 / 255],
+  glowColor: [1, 1, 1],
+  markers: [...GLOBE_MARKERS],
+};
+
+const DARK_GLOBE_CONFIG: COBEOptions = {
+  ...LIGHT_GLOBE_CONFIG,
+  dark: 1,
+  baseColor: [0.3, 0.3, 0.3],
+  mapBrightness: 1.5,
+  markerColor: [1, 0.5, 0.2],
+};
 
 const HERO_TEXT_REVEAL_DURATION = 0.6;
 const HERO_TEXT_REPEAT_DELAY = 3.5;
 
-const Globe3D = lazy(async () => {
-  const module = await import("@/components/ui/3d-globe");
-  return { default: module.Globe3D };
-});
-
-function useIsClient() {
-  return useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
-  );
-}
-
 function HeroGlobe({ isDark }: { isDark: boolean }) {
-  const isClient = useIsClient();
-  if (!isClient) return <div className="h-full w-full" aria-hidden="true" />;
-
   return (
-    <Suspense fallback={<div className="h-full w-full" aria-hidden="true" />}>
-      <Globe3D
+    <div className="relative size-full overflow-hidden">
+      <Globe
         className={cn(
-          "h-full w-full cursor-grab touch-none active:cursor-grabbing",
+          "h-full w-full max-w-none cursor-grab touch-none active:cursor-grabbing",
           isDark ? "brightness-[1.28]" : "brightness-[0.78]",
         )}
-        markers={markers}
-        config={{
-          showAtmosphere: false,
-          bumpScale: 2.2,
-          autoRotateSpeed: 0.3,
-          initialRotation: { x: -0.24, y: 2.72 },
-          enableZoom: false,
-          enablePan: false,
-          markerSize: 0.09,
-          ambientIntensity: 0.95,
-          pointLightIntensity: 2.25,
-          backgroundColor: null,
-        }}
+        config={isDark ? DARK_GLOBE_CONFIG : LIGHT_GLOBE_CONFIG}
       />
-    </Suspense>
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 bg-gradient-to-r",
+          isDark
+            ? "from-black/55 via-black/20 to-transparent"
+            : "from-white/30 via-white/10 to-transparent",
+        )}
+        aria-hidden="true"
+      />
+    </div>
   );
 }
 
@@ -148,17 +148,12 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="pointer-events-auto absolute -right-[15rem] -bottom-[15rem] z-0 size-[37rem] opacity-100 sm:-right-[10rem] sm:-bottom-[14rem] sm:size-[46rem] lg:-right-[11rem] lg:-bottom-[17rem] lg:size-[53rem]">
-          <HeroGlobe isDark={isDark} />
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-0 bg-gradient-to-r",
-              isDark
-                ? "from-black/55 via-black/20 to-transparent"
-                : "from-white/30 via-white/10 to-transparent",
-            )}
-            aria-hidden="true"
-          />
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div className="relative mx-auto size-full max-w-7xl">
+            <div className="pointer-events-auto absolute -right-[15rem] -bottom-[15rem] size-[37rem] opacity-100 sm:-right-[10rem] sm:-bottom-[14rem] sm:size-[46rem] lg:-right-[11rem] lg:-bottom-[17rem] lg:size-[53rem]">
+              <HeroGlobe isDark={isDark} />
+            </div>
+          </div>
         </div>
       </section>
 

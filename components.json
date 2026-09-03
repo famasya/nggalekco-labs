@@ -21,6 +21,7 @@
   "registries": {
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json",
     "@iconiq": "https://iconiqui.com/r/{name}.json",
-    "@beui": "https://beui.dev/r/{name}.json"
+    "@beui": "https://beui.dev/r/{name}.json",
+    "@magicui": "https://magicui.design/r/{name}"
   }
 }
