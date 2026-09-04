@@ -2,14 +2,16 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
 import { ButtonLink as BoardButtonLink } from "@/components/base/buttons/button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Switch } from "@/components/ui/r-switch";
 import { translations } from "@/lib/landing-copy";
 import { useLocale } from "@/lib/locale";
+import { navItems } from "@/lib/navigation";
 import { useTheme } from "@/lib/theme";
 
 export function SiteFooter() {
   const [theme, setTheme] = useTheme();
-  const [locale] = useLocale();
+  const [locale, setLocale] = useLocale();
   const text = translations[locale];
   const isDark = theme === "dark";
   const themeCopy = {
@@ -68,30 +70,16 @@ export function SiteFooter() {
           <nav aria-label={text.mainNavigationLabel}>
             <p className="eyebrow mb-4">{text.mainNavigationLabel}</p>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/"
-                  className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
-                >
-                  {text.nav.home}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/team"
-                  className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
-                >
-                  {text.nav.approach}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/portofolios"
-                  className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
-                >
-                  {text.nav.portfolio}
-                </Link>
-              </li>
+              {navItems.map(({ value, to }) => (
+                <li key={value}>
+                  <Link
+                    to={to}
+                    className="text-sm text-gray-700 transition-colors hover:text-gray-950 dark:text-gray-300 dark:hover:text-white"
+                  >
+                    {text.nav[value as keyof typeof text.nav]}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
@@ -120,6 +108,10 @@ export function SiteFooter() {
               thumbContent={isDark ? "🌙" : "☀️"}
               className="[--ic-accent:#f3f4f6] [--ic-card:#ffffff] [--ic-foreground:#111827] dark:[--ic-accent:#374151] dark:[--ic-card:#000000] dark:[--ic-foreground:#ffffff]"
             />
+            <div className="mt-6 border-t border-gray-200 pt-6 dark:border-gray-800">
+              <p className="eyebrow mb-4">{text.languageLabel}</p>
+              <LanguageSwitcher locale={locale} label={text.languageLabel} onChange={setLocale} />
+            </div>
           </div>
         </div>
 

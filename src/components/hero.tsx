@@ -3,10 +3,11 @@
 import { Link } from "@tanstack/react-router";
 import type { COBEOptions } from "cobe";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { buttonStyles } from "@/components/base/buttons/button";
 import { Bento02 } from "@/components/bento-02";
+import { ChromaticTextReveal } from "@/components/motion/chromatic-text-reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { DiaText } from "@/components/ui/dia-text";
 import { Globe } from "@/components/ui/globe";
@@ -22,7 +23,7 @@ const LIGHT_GLOBE_CONFIG: COBEOptions = {
   height: 800,
   onRender: () => {},
   devicePixelRatio: 2,
-  phi: 3.52,
+  phi: 2.3,
   theta: -0.15,
   dark: 0,
   diffuse: 0.4,
@@ -43,7 +44,6 @@ const DARK_GLOBE_CONFIG: COBEOptions = {
 };
 
 const HERO_TEXT_REVEAL_DURATION = 0.6;
-const HERO_TEXT_REPEAT_DELAY = 3.5;
 
 function HeroGlobe({ isDark }: { isDark: boolean }) {
   return (
@@ -72,7 +72,16 @@ export function Hero() {
   const [theme] = useTheme();
   const isDark = theme === "dark";
   const [locale] = useLocale();
+  const [titleSecondIndex, setTitleSecondIndex] = useState(0);
+  const [hasClickedTitle, setHasClickedTitle] = useState(false);
+  const [titleRevealKey, setTitleRevealKey] = useState(0);
   const text = translations[locale];
+  const titleSecond = text.hero.titleSecond[titleSecondIndex % text.hero.titleSecond.length];
+  const handleTitleClick = () => {
+    setTitleSecondIndex((index) => (index + 1) % text.hero.titleSecond.length);
+    setHasClickedTitle(true);
+    setTitleRevealKey((key) => key + 1);
+  };
   useEffect(() => {
     document.title = `nggalek.co Labs — ${text.metaTitle}`;
   }, [locale, text]);
@@ -105,15 +114,30 @@ export function Hero() {
                 textColor={isDark ? "#f3f4f6" : "#111827"}
               />
               <br />
-              <DiaText
-                className="font-normal"
-                text={text.hero.titleSecond}
-                duration={HERO_TEXT_REVEAL_DURATION}
-                textColor={isDark ? "#f3f4f6" : "#111827"}
-                repeat
-                repeatDelay={HERO_TEXT_REPEAT_DELAY}
-                wrap
-              />
+              <button
+                type="button"
+                className="pointer-events-auto inline-block max-w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left font-normal leading-inherit text-inherit"
+                onClick={handleTitleClick}
+                aria-label={titleSecond}
+              >
+                {hasClickedTitle ? (
+                  <ChromaticTextReveal
+                    key={titleRevealKey}
+                    prefix=""
+                    words={[titleSecond]}
+                    foregroundColor={isDark ? "#f3f4f6" : "#111827"}
+                    duration={HERO_TEXT_REVEAL_DURATION}
+                    loop={false}
+                    startOnView={false}
+                    wrap
+                    className="block max-w-full font-normal"
+                  />
+                ) : (
+                  <span className="inline-block max-w-full whitespace-pre-wrap break-words">
+                    {titleSecond}
+                  </span>
+                )}
+              </button>
             </h1>
             <p className="mt-6 max-w-lg text-base font-light leading-7 text-gray-600 dark:text-gray-300 lg:text-lg lg:leading-7">
               {text.hero.description}
